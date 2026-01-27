@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Section from "../../components/ui/Section.astro";
+
+const posts = [
+  { title: "Why face fitness works (placeholder)", href: "/blog/why-face-fitness-works" },
+  { title: "Jawline & tongue posture (placeholder)", href: "/blog/jawline-tongue-posture" },
+];
+---
+<BaseLayout title="Blog • Face Fitness">
+  <Section title="Blog">
+    <div class="card">
+      <p class="muted">
+        A few short articles to explain the method and build trust. (Placeholder.)
+      </p>
+      <ul class="bullets">
+        {posts.map((p) => (
+          <li><a href={p.href}>{p.title}</a></li>
+        ))}
+      </ul>
+    </div>
+  </Section>
+</BaseLayout>
