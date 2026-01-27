@@ -1,17 +1,52 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/ui/Section.astro";
+import Button from "../components/ui/Button.astro";
 
+const CHECKOUT_URL = "https://example.com/checkout"; // placeholder
 ---
+<BaseLayout title="Face Fitness by Alina">
+  <Section>
+    <div class="card">
+      <h1>Lift and define your face naturally.</h1>
+      <p style="color:var(--muted);max-width:60ch;">
+        A guided face fitness course for women who want fuller cheeks, a sharper jawline
+        and a more open look — without needles.
+      </p>
+      <div style="margin-top:14px;">
+        <Button href={CHECKOUT_URL} variant="primary">Join the course</Button>
+        <span style="margin-left:10px;color:rgba(231,238,252,.65);font-size:13px;">
+          Start anytime • 100% online
+        </span>
+      </div>
+    </div>
+  </Section>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  <Section id="course" title="The course (coming soon)">
+    <div class="card">
+      <p style="color:var(--muted);">
+        Placeholder summary — hosted on the course platform.
+      </p>
+      <Button href={CHECKOUT_URL} variant="secondary">View checkout</Button>
+    </div>
+  </Section>
+
+  <Section id="faq" title="FAQ">
+    <div class="card">
+      <ul>
+        <li><strong>When will I see results?</strong> Consistency matters; results vary.</li>
+        <li><strong>Is it safe?</strong> Gentle approach; stop if pain.</li>
+        <li><strong>How do I access the course?</strong> Via the course platform after purchase.</li>
+      </ul>
+    </div>
+  </Section>
+
+  <Section id="free-tips" title="Free tips (email)">
+    <div class="card">
+      <p style="color:var(--muted);">
+        Placeholder — in Week 4 we connect this to MailerLite/ConvertKit.
+      </p>
+      <a class="btn btn--secondary" href="/thanks">Get the free guide</a>
+    </div>
+  </Section>
+</BaseLayout>
