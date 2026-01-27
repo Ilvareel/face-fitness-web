@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import CookieBanner from "../components/CookieBanner.astro";
 
 const {
   title = "Face Fitness by Alina",
@@ -10,8 +11,10 @@ const {
 
 const url = new URL(Astro.request.url);
 const canonicalUrl = canonical || url.origin + url.pathname;
----
 
+// GA4 ID (public env)
+const ga4Id = import.meta.env.PUBLIC_GA4_ID ?? "";
+---
 <!doctype html>
 <html lang="en">
   <head>
@@ -27,7 +30,117 @@ const canonicalUrl = canonical || url.origin + url.pathname;
     <meta property="og:url" content={canonicalUrl} />
 
     <link rel="stylesheet" href="/styles/global.css" />
+
+    <!-- Consent Mode v2 + GA loader (loads GA only after accept) -->
+    <script define:vars={{ ga4Id }}>
+      // Simple consent storage key (stable)
+      const CONSENT_KEY = "cookie_consent_v1"; // accepted | rejected | null
+
+      // gtag bootstrap (safe even before GA script is loaded)
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+
+      // Default: denied (Consent Mode v2)
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        analytics_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+      });
+
+      function loadGA(){
+        if (!ga4Id) return;
+        if (window.__gaLoaded) return;
+        window.__gaLoaded = true;
+
+        const s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(ga4Id);
+        document.head.appendChild(s);
+
+        gtag("js", new Date());
+        gtag("config", ga4Id, { anonymize_ip: true });
+      }
+
+      // Expose a global function for the banner
+      window.__setCookieConsent = function(status){
+        try { localStorage.setItem(CONSENT_KEY, status); } catch {}
+
+        if (status === "accepted") {
+          gtag("consent", "update", {
+            ad_storage: "denied",
+            analytics_storage: "granted",
+            ad_user_data: "denied",
+            ad_personalization: "denied",
+          });
+          loadGA();
+        } else {
+          gtag("consent", "update", {
+            ad_storage: "denied",
+            analytics_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied",
+          });
+        }
+
+        window.dispatchEvent(new CustomEvent("cookie-consent-updated", { detail: { status } }));
+      };
+
+      // On load: apply stored consent
+      (function(){
+        let status = null;
+        try { status = localStorage.getItem(CONSENT_KEY); } catch {}
+        if (status === "accepted") window.__setCookieConsent("accepted");
+        if (status === "rejected") window.__setCookieConsent("rejected");
+      })();
+    </script>
+
+    <!-- Event tracking (only sends if GA is loaded) -->
+    <script>
+      function safeGtagEvent(name, params){
+        if (typeof window.gtag !== "function") return;
+        if (!window.__gaLoaded) return;
+        window.gtag("event", name, params || {});
+      }
+
+      // Click tracking via data attributes
+      document.addEventListener("click", (e) => {
+        const el = e.target && e.target.closest ? e.target.closest("[data-ff-event]") : null;
+        if (!el) return;
+
+        const eventName = el.getAttribute("data-ff-event");
+        const content = el.getAttribute("data-ff-content") || "";
+        const href = el.getAttribute("href") || "";
+
+        safeGtagEvent(eventName, {
+          content,
+          link_url: href,
+        });
+
+        // Special outbound checkout event
+        if (el.getAttribute("data-ff-outbound") === "checkout") {
+          safeGtagEvent("outbound_checkout", { content, link_url: href });
+        }
+      });
+
+      // Scroll depth 75% (once)
+      let fired75 = false;
+      window.addEventListener("scroll", () => {
+        if (fired75) return;
+        const doc = document.documentElement;
+        const scrollTop = window.scrollY || doc.scrollTop || 0;
+        const height = (doc.scrollHeight || 0) - (window.innerHeight || 0);
+        if (height <= 0) return;
+        const pct = scrollTop / height;
+        if (pct >= 0.75) {
+          fired75 = true;
+          safeGtagEvent("scroll_75", { page_path: location.pathname });
+        }
+      }, { passive: true });
+    </script>
   </head>
+
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
@@ -38,5 +151,7 @@ const canonicalUrl = canonical || url.origin + url.pathname;
     </main>
 
     <Footer />
+
+    <CookieBanner />
   </body>
 </html>

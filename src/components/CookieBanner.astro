@@ -1,0 +1,49 @@
+---
+const CONSENT_KEY = "cookie_consent_v1";
+---
+<div id="cookie-banner" class="cookie" aria-live="polite" hidden>
+  <div class="cookie__inner">
+    <div class="cookie__text">
+      <strong>Cookies</strong>
+      <p>
+        We use analytics cookies to understand traffic and improve the website.
+        You can accept or reject analytics tracking.
+      </p>
+      <a class="cookie__link" href="/privacy">Learn more</a>
+    </div>
+
+    <div class="cookie__actions">
+      <button class="btn btn--secondary" id="cookie-reject" type="button">Reject</button>
+      <button class="btn btn--primary" id="cookie-accept" type="button">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CONSENT_KEY = "cookie_consent_v1";
+  const banner = document.getElementById("cookie-banner");
+  const accept = document.getElementById("cookie-accept");
+  const reject = document.getElementById("cookie-reject");
+
+  function getStored(){
+    try { return localStorage.getItem(CONSENT_KEY); } catch { return null; }
+  }
+
+  function showIfNeeded(){
+    const v = getStored();
+    if (v === "accepted" || v === "rejected") return;
+    banner.hidden = false;
+  }
+
+  accept?.addEventListener("click", () => {
+    banner.hidden = true;
+    window.__setCookieConsent?.("accepted");
+  });
+
+  reject?.addEventListener("click", () => {
+    banner.hidden = true;
+    window.__setCookieConsent?.("rejected");
+  });
+
+  showIfNeeded();
+</script>
