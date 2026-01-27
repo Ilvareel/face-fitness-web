@@ -1,0 +1,24 @@
+---
+import Container from "./ui/Container.astro";
+import Button from "./ui/Button.astro";
+
+const CHECKOUT_URL = "https://example.com/checkout"; // placeholder (Week 1)
+---
+<header class="header">
+  <Container>
+    <div class="header__inner">
+      <a class="logo" href="/">Face Fitness</a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="/#course">Course</a>
+        <a href="/about">About</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#free-tips">Free tips</a>
+      </nav>
+
+      <div class="header__cta">
+        <Button href={CHECKOUT_URL} variant="primary">Join the course</Button>
+      </div>
+    </div>
+  </Container>
+</header>

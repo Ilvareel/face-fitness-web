@@ -1,0 +1,31 @@
+---
+import Container from "./ui/Container.astro";
+---
+<footer class="footer">
+  <Container>
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__brand">Face Fitness by Alina</div>
+        <p class="footer__small">
+          Natural face fitness methods. Results vary. Consistency matters.
+        </p>
+      </div>
+
+      <div class="footer__col">
+        <div class="footer__title">Links</div>
+        <a href="/privacy">Privacy</a><br />
+        <a href="/terms">Terms</a><br />
+        <a href="/about">About</a>
+      </div>
+
+      <div class="footer__col">
+        <div class="footer__title">Contact</div>
+        <a href="mailto:hello@example.com">hello@example.com</a>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      © {new Date().getFullYear()} • Internal MVP
+    </div>
+  </Container>
+</footer>

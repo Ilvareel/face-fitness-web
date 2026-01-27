@@ -1,0 +1,19 @@
+---
+const {
+  href = "",
+  variant = "primary", // primary | secondary | ghost
+  target = "_blank",
+  rel = "noopener noreferrer"
+} = Astro.props;
+
+const classes = `btn btn--${variant}`;
+---
+{href ? (
+  <a class={classes} href={href} target={target} rel={rel}>
+    <slot />
+  </a>
+) : (
+  <button class={classes} type="button">
+    <slot />
+  </button>
+)}
