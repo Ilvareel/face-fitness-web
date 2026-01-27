@@ -1,0 +1,43 @@
+---
+import Button from "../ui/Button.astro";
+import { getCheckoutUrl } from "../../lib/checkout";
+
+const checkoutUrl = getCheckoutUrl({ content: "hero" });
+---
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="kicker">High-ticket course • Start anytime</p>
+      <h1>Lift and define your face naturally.</h1>
+
+      <p class="lead">
+        A guided face fitness course for women who want fuller cheeks, a sharper jawline,
+        and a more open look — without needles.
+      </p>
+
+      <div class="hero__cta">
+        <Button href={checkoutUrl} variant="primary">Join the course</Button>
+        <Button href="/#course" variant="secondary" target="_self" rel="">See what’s inside</Button>
+      </div>
+
+      <ul class="checklist">
+        <li>Tongue posture + breathing + soft tissue work</li>
+        <li>Short daily routine (placeholder: 10–15 min)</li>
+        <li>Designed for women of all ages</li>
+      </ul>
+
+      <p class="micro">
+        Results vary. This is not medical advice. Stop if you feel pain.
+      </p>
+    </div>
+
+    <div class="hero__visual card">
+      <div class="visual__badge">Before / After</div>
+      <div class="visual__grid">
+        <div class="visual__box">Before</div>
+        <div class="visual__box">After</div>
+      </div>
+      <p class="visual__note">Placeholder visuals — Alina will provide real examples later.</p>
+    </div>
+  </div>
+</section>

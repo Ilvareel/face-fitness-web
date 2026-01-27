@@ -3,50 +3,119 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/ui/Section.astro";
 import Button from "../components/ui/Button.astro";
 
-const CHECKOUT_URL = "https://example.com/checkout"; // placeholder
+import Hero from "../components/home/Hero.astro";
+import FeatureGrid from "../components/home/FeatureGrid.astro";
+import MethodSteps from "../components/home/MethodSteps.astro";
+
+import { getCheckoutUrl } from "../lib/checkout";
+
+const checkoutMid = getCheckoutUrl({ content: "mid" });
 ---
-<BaseLayout title="Face Fitness by Alina">
-  <Section>
-    <div class="card">
-      <h1>Lift and define your face naturally.</h1>
-      <p style="color:var(--muted);max-width:60ch;">
-        A guided face fitness course for women who want fuller cheeks, a sharper jawline
-        and a more open look — without needles.
-      </p>
-      <div style="margin-top:14px;">
-        <Button href={CHECKOUT_URL} variant="primary">Join the course</Button>
-        <span style="margin-left:10px;color:rgba(231,238,252,.65);font-size:13px;">
-          Start anytime • 100% online
-        </span>
+<BaseLayout
+  title="Face Fitness by Alina"
+  description="A guided face fitness course for women. Natural methods combining tongue posture, breathing and soft tissue work."
+>
+  <Hero />
+
+  <Section title="What you can expect">
+    <FeatureGrid />
+  </Section>
+
+  <Section id="method" title="The method (why it’s different)">
+    <MethodSteps />
+  </Section>
+
+  <Section id="course" title="The course (hosted on the platform)">
+    <div class="grid grid--2">
+      <div class="card">
+        <h3 class="h3">What you get</h3>
+        <ul class="bullets">
+          <li>Structured lessons + routine (placeholder)</li>
+          <li>Technique cues and “common mistakes”</li>
+          <li>Progress path (beginner → consistent habits)</li>
+          <li>Access via course platform after purchase</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="h3">Join now</h3>
+        <p class="muted">
+          Checkout and access are handled by the platform. This website is the learning + trust hub.
+        </p>
+        <div class="stack">
+          <Button href={checkoutMid} variant="primary">Go to checkout</Button>
+          <p class="micro">Placeholder pricing: $100+ • Start anytime</p>
+        </div>
       </div>
     </div>
   </Section>
 
-  <Section id="course" title="The course (coming soon)">
-    <div class="card">
-      <p style="color:var(--muted);">
-        Placeholder summary — hosted on the course platform.
-      </p>
-      <Button href={CHECKOUT_URL} variant="secondary">View checkout</Button>
+  <Section id="proof" title="Results & social proof">
+    <div class="grid grid--2">
+      <div class="card">
+        <h3 class="h3">Before / After (placeholder)</h3>
+        <div class="proof-grid">
+          <div class="proof-box">Example 1</div>
+          <div class="proof-box">Example 2</div>
+          <div class="proof-box">Example 3</div>
+          <div class="proof-box">Example 4</div>
+        </div>
+        <p class="micro">Real examples will be added later.</p>
+      </div>
+
+      <div class="card">
+        <h3 class="h3">What students say (placeholder)</h3>
+        <div class="quotes">
+          <blockquote class="quote">
+            “After a few weeks my face looked more rested and open.” <span>— Student A</span>
+          </blockquote>
+          <blockquote class="quote">
+            “The routine is simple, I can actually stick to it.” <span>— Student B</span>
+          </blockquote>
+          <blockquote class="quote">
+            “I didn’t realize how much tongue posture affects everything.” <span>— Student C</span>
+          </blockquote>
+        </div>
+      </div>
     </div>
   </Section>
 
   <Section id="faq" title="FAQ">
     <div class="card">
-      <ul>
-        <li><strong>When will I see results?</strong> Consistency matters; results vary.</li>
-        <li><strong>Is it safe?</strong> Gentle approach; stop if pain.</li>
-        <li><strong>How do I access the course?</strong> Via the course platform after purchase.</li>
-      </ul>
+      <details class="faq" open>
+        <summary>When will I see results?</summary>
+        <p class="muted">Consistency matters. Results vary based on habits, starting point, and frequency (placeholder).</p>
+      </details>
+
+      <details class="faq">
+        <summary>Is it safe?</summary>
+        <p class="muted">The approach is designed to be gentle. Stop if you feel pain. This is not medical advice.</p>
+      </details>
+
+      <details class="faq">
+        <summary>How do I access the course?</summary>
+        <p class="muted">After purchase, you’ll get access through the course platform.</p>
+      </details>
+
+      <details class="faq">
+        <summary>Do I need equipment?</summary>
+        <p class="muted">No. Just a few minutes daily and consistency.</p>
+      </details>
     </div>
   </Section>
 
   <Section id="free-tips" title="Free tips (email)">
-    <div class="card">
-      <p style="color:var(--muted);">
-        Placeholder — in Week 4 we connect this to MailerLite/ConvertKit.
-      </p>
-      <a class="btn btn--secondary" href="/thanks">Get the free guide</a>
+    <div class="card leadmagnet">
+      <div>
+        <h3 class="h3">Get the free mini-guide</h3>
+        <p class="muted">
+          Placeholder: 3 quick tips to reduce facial tension and support a more open look.
+        </p>
+      </div>
+      <div class="leadmagnet__cta">
+        <a class="btn btn--primary" href="/thanks">Get the guide</a>
+        <p class="micro">In Week 4 we connect this to MailerLite/ConvertKit + GDPR checkbox.</p>
+      </div>
     </div>
   </Section>
 </BaseLayout>

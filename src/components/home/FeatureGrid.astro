@@ -1,0 +1,28 @@
+---
+const items = [
+  {
+    title: "Firmer jawline",
+    text: "Support natural facial posture and reduce tension patterns (placeholder).",
+  },
+  {
+    title: "Fuller cheeks",
+    text: "Work with soft tissues and habits that affect volume and lift (placeholder).",
+  },
+  {
+    title: "More open look",
+    text: "Breathing + tongue posture can change how the face “holds” itself (placeholder).",
+  },
+  {
+    title: "Gentle & consistent",
+    text: "A sustainable routine you can repeat daily without equipment.",
+  },
+];
+---
+<div class="grid grid--2">
+  {items.map((x) => (
+    <div class="card">
+      <h3 class="h3">{x.title}</h3>
+      <p class="muted">{x.text}</p>
+    </div>
+  ))}
+</div>

@@ -1,0 +1,17 @@
+---
+const steps = [
+  { title: "Tongue posture", text: "Learn placement and cues (placeholder)." },
+  { title: "Breathing", text: "Reduce shallow patterns, support better posture (placeholder)." },
+  { title: "Soft tissues", text: "Gentle release + activation (placeholder)." },
+  { title: "Consistency", text: "Short daily practice with progressive structure (placeholder)." },
+];
+---
+<div class="grid grid--2">
+  {steps.map((s, i) => (
+    <div class="card">
+      <p class="step-kicker">Step {i + 1}</p>
+      <h3 class="h3">{s.title}</h3>
+      <p class="muted">{s.text}</p>
+    </div>
+  ))}
+</div>
