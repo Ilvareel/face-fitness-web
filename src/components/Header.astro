@@ -1,10 +1,10 @@
 ---
 import Container from "./ui/Container.astro";
 import Button from "./ui/Button.astro";
-import { getCheckoutUrl } from "../lib/checkout";
 
-const checkoutUrl = getCheckoutUrl({ content: "header" });
+const CHECKOUT_URL = "https://example.com/checkout"; // placeholder (Week 1)
 ---
+
 <header class="header">
   <Container>
     <div class="header__inner">
@@ -12,15 +12,22 @@ const checkoutUrl = getCheckoutUrl({ content: "header" });
 
       <nav class="nav" aria-label="Primary">
         <a href="/#course">Course</a>
-        <a href="/#method">Method</a>
-        <a href="/#proof">Results</a>
-        <a href="/#faq">FAQ</a>
-        <a href="/blog">Blog</a>
         <a href="/about">About</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#free-tips">Free tips</a>
       </nav>
 
       <div class="header__cta">
-        <Button href={checkoutUrl} variant="primary">Join the course</Button>
+        <Button
+          href={CHECKOUT_URL}
+          variant="primary"
+          target="_self"
+          data-ff-event="cta_click"
+          data-ff-content="header"
+          data-ff-outbound="checkout"
+        >
+          Join the course
+        </Button>
       </div>
     </div>
   </Container>
