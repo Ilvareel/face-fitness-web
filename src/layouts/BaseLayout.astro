@@ -5,12 +5,13 @@ import Footer from "../components/Footer.astro";
 const {
   title = "Face Fitness by Alina",
   description = "A guided face fitness course for women. Natural methods combining tongue posture, breathing and soft tissue work.",
-  canonical = ""
+  canonical = "",
 } = Astro.props;
 
 const url = new URL(Astro.request.url);
 const canonicalUrl = canonical || url.origin + url.pathname;
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -20,7 +21,6 @@ const canonicalUrl = canonical || url.origin + url.pathname;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
 
-    <!-- Basic OG (placeholder) -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -30,10 +30,13 @@ const canonicalUrl = canonical || url.origin + url.pathname;
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+
     <Header />
+
     <main id="main">
       <slot />
     </main>
+
     <Footer />
   </body>
 </html>
