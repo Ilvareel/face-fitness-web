@@ -2,14 +2,31 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/ui/Section.astro";
 ---
-
 <BaseLayout title="About Alina • Face Fitness">
   <Section title="About Alina">
-    <div class="card">
-      <p style="color:var(--muted);max-width:70ch;">
-        Alina is a face fitness coach focused on natural methods combining tongue posture,
-        breathing and soft tissue work. (Placeholder text.)
-      </p>
+    <div class="grid grid--2">
+      <div class="card">
+        <p class="muted">
+          Placeholder bio: Alina is a face fitness coach focused on natural methods that combine
+          tongue posture, breathing, and soft tissue work to support a more lifted, open look.
+        </p>
+
+        <ul class="bullets">
+          <li>Focus: women of all ages</li>
+          <li>Style: gentle, structured, consistent</li>
+          <li>Goal: habits that you can keep long-term</li>
+        </ul>
+
+        <p class="micro">
+          Final bio and credentials will be added by Alina.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 class="h3">Photo / profile (placeholder)</h3>
+        <div class="visual__box" style="height:220px;">Alina photo</div>
+        <p class="micro">We’ll replace this with a real portrait + short story.</p>
+      </div>
     </div>
   </Section>
 </BaseLayout>

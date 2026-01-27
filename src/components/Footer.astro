@@ -1,13 +1,14 @@
 ---
 import Container from "./ui/Container.astro";
+import { SITE } from "../lib/site";
 ---
 <footer class="footer">
   <Container>
     <div class="footer__inner">
       <div class="footer__col">
-        <div class="footer__brand">Face Fitness by Alina</div>
+        <div class="footer__brand">{SITE.brandLine}</div>
         <p class="footer__small">
-          Natural face fitness methods. Results vary. Consistency matters.
+          Natural face fitness methods. Results vary. This website does not provide medical advice.
         </p>
       </div>
 
@@ -15,17 +16,18 @@ import Container from "./ui/Container.astro";
         <div class="footer__title">Links</div>
         <a href="/privacy">Privacy</a><br />
         <a href="/terms">Terms</a><br />
+        <a href="/blog">Blog</a><br />
         <a href="/about">About</a>
       </div>
 
       <div class="footer__col">
         <div class="footer__title">Contact</div>
-        <a href="mailto:hello@example.com">hello@example.com</a>
+        <a href={`mailto:${SITE.supportEmail}`}>{SITE.supportEmail}</a>
       </div>
     </div>
 
     <div class="footer__bottom">
-      © {new Date().getFullYear()} • Internal MVP
+      © {new Date().getFullYear()} • {SITE.name}
     </div>
   </Container>
 </footer>
