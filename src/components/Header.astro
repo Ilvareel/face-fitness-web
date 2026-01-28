@@ -2,29 +2,36 @@
 import Container from "./ui/Container.astro";
 import Button from "./ui/Button.astro";
 
-const CHECKOUT_URL = "https://example.com/checkout"; // placeholder (Week 1)
+const checkoutBase = "https://example.com/checkout"; // TODO: replace
+const checkoutUrl = `${checkoutBase}?utm_source=site&utm_medium=header&utm_campaign=primary_cta`;
 ---
 
-<header class="header">
+<header class="site-header">
   <Container>
-    <div class="header__inner">
-      <a class="logo" href="/">Face Fitness</a>
+    <div class="site-header__inner">
+      <a
+        class="brand"
+        href="/"
+        data-ff-event="nav_click"
+        data-ff-content="brand_home"
+        aria-label="Face Fitness home"
+      >
+        Face Fitness
+      </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a href="/#course">Course</a>
-        <a href="/about">About</a>
-        <a href="/#faq">FAQ</a>
-        <a href="/#free-tips">Free tips</a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#course" data-ff-event="nav_click" data-ff-content="nav_course">Course</a>
+        <a href="/about" data-ff-event="nav_click" data-ff-content="nav_about">About</a>
+        <a href="/#faq" data-ff-event="nav_click" data-ff-content="nav_faq">FAQ</a>
+        <a href="/#free-tips" data-ff-event="nav_click" data-ff-content="nav_free_tips">Free tips</a>
       </nav>
 
-      <div class="header__cta">
+      <div class="cta">
         <Button
-          href={CHECKOUT_URL}
+          href={checkoutUrl}
           variant="primary"
-          target="_self"
           data-ff-event="cta_click"
-          data-ff-content="header"
-          data-ff-outbound="checkout"
+          data-ff-content="header_join_course"
         >
           Join the course
         </Button>

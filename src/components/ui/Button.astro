@@ -1,25 +1,13 @@
 ---
-const {
-  href = "",
-  variant = "primary", // primary | secondary | ghost
-  target = "_self",
-  rel,
-  ...rest
-} = Astro.props;
+const { href = "#", variant = "primary", ...rest } = Astro.props;
 
-const classes = `btn btn--${variant}`;
+// allow passing class + any data-* attributes
+const className = (rest.class ?? "").toString();
+if ("class" in rest) delete rest.class;
 
-const computedRel =
-  rel ??
-  (target === "_blank" ? "noopener noreferrer" : undefined);
+const classes = `btn btn--${variant} ${className}`.trim();
 ---
 
-{href ? (
-  <a class={classes} href={href} target={target} rel={computedRel} {...rest}>
-    <slot />
-  </a>
-) : (
-  <button class={classes} type="button" {...rest}>
-    <slot />
-  </button>
-)}
+<a href={href} class={classes} {...rest}>
+  <slot />
+</a>
