@@ -3,32 +3,23 @@ import Container from "../ui/Container.astro";
 import Button from "../ui/Button.astro";
 import { getCheckoutUrl } from "../../lib/checkout";
 
-const checkout = getCheckoutUrl({ content: "hero", medium: "hero" });
+const checkoutUrl = getCheckoutUrl({ content: "hero", medium: "hero" });
 ---
 
 <section class="hero" aria-label="Hero">
   <Container>
     <div class="hero__grid">
       <div class="hero__copy">
-        <p class="hero__kicker">
-          <span class="pill">Face Fitness</span>
-          <span class="dot" aria-hidden="true"></span>
-          For women • Start anytime
-        </p>
-
-        <h1 class="hero__title">
-          Lift and define your face
-          <span class="hero__titleAccent"> naturally</span>.
-        </h1>
-
-        <p class="hero__subtitle">
-          A guided course combining tongue posture, breathing, and soft tissue work — designed to support a more open look
-          and healthier facial habits (no needles).
+        <p class="kicker">Discover the beauty within you</p>
+        <h1 class="hero__title">Lift and define your face — naturally.</h1>
+        <p class="hero__lead muted">
+          A guided face fitness course for women combining tongue posture, breathing and soft tissue work.
+          Gentle. Structured. Sustainable.
         </p>
 
         <div class="hero__cta">
           <Button
-            href={checkout}
+            href={checkoutUrl}
             variant="primary"
             target="_blank"
             rel="noreferrer"
@@ -36,198 +27,130 @@ const checkout = getCheckoutUrl({ content: "hero", medium: "hero" });
             data-ff-content="hero"
             data-ff-outbound="checkout"
           >
-            Join the course
+            View course
           </Button>
 
           <Button
-            href="#course"
+            href="#free-tips"
             variant="secondary"
             data-ff-event="scroll_click"
-            data-ff-content="hero_to_course"
+            data-ff-content="hero_to_free_tips"
           >
-            See what’s inside
+            Get free tips
           </Button>
         </div>
 
-        <ul class="hero__bullets">
-          <li>Short daily routine (10–15 min)</li>
-          <li>Gentle, sustainable technique</li>
-          <li>Clear structure + progress path</li>
-        </ul>
-
-        <p class="hero__disclaimer">
-          Results vary. This website does not provide medical advice. Stop if you feel pain.
-        </p>
+        <div class="hero__meta">
+          <div class="hero__metaItem">
+            <div class="hero__metaLabel">Routine</div>
+            <div class="hero__metaValue">10–15 min/day</div>
+          </div>
+          <div class="hero__metaItem">
+            <div class="hero__metaLabel">Approach</div>
+            <div class="hero__metaValue">Gentle & consistent</div>
+          </div>
+          <div class="hero__metaItem">
+            <div class="hero__metaLabel">Level</div>
+            <div class="hero__metaValue">Beginner-friendly</div>
+          </div>
+        </div>
       </div>
 
-      <div class="hero__visual" aria-hidden="true">
-        <div class="glow"></div>
-
-        <div class="preview card">
-          <div class="preview__top">
-            <span class="sparkle"></span>
-            <div>
-              <div class="preview__label">Before / After</div>
-              <div class="preview__small">Placeholder</div>
-            </div>
+      <div class="hero__image" aria-hidden="true">
+        <div class="hero__imgPanel">
+          <div class="hero__imgTop">
+            <span class="hero__imgBadge">Featured</span>
+            <span class="hero__imgSmall muted">Placeholder visuals</span>
           </div>
-
-          <div class="preview__grid">
-            <div class="ph">Before</div>
-            <div class="ph">After</div>
-          </div>
-
-          <div class="preview__hint">
-            Real examples will be added later.
-          </div>
+          <div class="hero__imgPlaceholder">Image</div>
         </div>
       </div>
     </div>
   </Container>
+
+  <style>
+    .hero{ padding: 84px 0 48px; }
+    .hero__grid{
+      display:grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .hero__title{
+      font-size: clamp(42px, 5.2vw, 74px);
+      margin: 10px 0 0;
+      font-family: var(--font-serif);
+    }
+    .hero__lead{ margin: 14px 0 0; max-width: 62ch; font-size: 16px; }
+
+    .hero__cta{ margin-top: 20px; display:flex; gap: 12px; flex-wrap: wrap; }
+
+    .hero__meta{
+      margin-top: 22px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+    .hero__metaItem{
+      border: 1px solid var(--line-2);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.6);
+      padding: 12px;
+    }
+    .hero__metaLabel{
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(17,17,17,0.58);
+    }
+    .hero__metaValue{
+      margin-top: 6px;
+      font-family: var(--font-serif);
+      font-size: 18px;
+    }
+
+    .hero__imgPanel{
+      border-radius: 22px;
+      border: 1px solid var(--line-2);
+      background: rgba(255,255,255,0.65);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hero__imgTop{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line-2);
+      background: rgba(255,255,255,0.75);
+    }
+    .hero__imgBadge{
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: var(--accent);
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+    .hero__imgPlaceholder{
+      height: 360px;
+      background:
+        linear-gradient(180deg, rgba(107,63,34,0.08), transparent 55%),
+        linear-gradient(90deg, rgba(17,17,17,0.04), rgba(17,17,17,0.02));
+      display:grid;
+      place-items:center;
+      color: rgba(17,17,17,0.55);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px){
+      .hero{ padding: 58px 0 34px; }
+      .hero__grid{ grid-template-columns: 1fr; }
+      .hero__imgPlaceholder{ height: 280px; }
+      .hero__meta{ grid-template-columns: 1fr; }
+    }
+  </style>
 </section>
-
-<style>
-  .hero { padding: 72px 0 42px; }
-
-  .hero__grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 22px;
-    align-items: center;
-  }
-
-  .hero__kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    color: rgba(238, 240, 255, 0.78);
-    font-size: 13px;
-    letter-spacing: 0.02em;
-    margin: 0 0 12px;
-  }
-
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(238, 240, 255, 0.92);
-    font-weight: 700;
-  }
-
-  .dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--accent-2), var(--accent));
-    box-shadow: 0 0 0 6px rgba(255, 111, 174, 0.10);
-  }
-
-  .hero__title {
-    font-size: clamp(40px, 5.3vw, 66px);
-    line-height: 1.03;
-    margin: 0;
-    letter-spacing: -0.03em;
-  }
-
-  .hero__titleAccent {
-    background: linear-gradient(90deg, var(--accent-3), var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 18px 60px rgba(255, 111, 174, 0.12);
-  }
-
-  .hero__subtitle {
-    margin: 14px 0 0;
-    color: rgba(238, 240, 255, 0.78);
-    max-width: 62ch;
-  }
-
-  .hero__cta {
-    margin-top: 18px;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .hero__bullets {
-    margin: 18px 0 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 10px;
-    color: rgba(238, 240, 255, 0.82);
-  }
-
-  .hero__bullets li { position: relative; padding-left: 18px; }
-  .hero__bullets li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.62em;
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--accent-2), var(--accent));
-  }
-
-  .hero__disclaimer {
-    margin: 14px 0 0;
-    font-size: 12px;
-    color: rgba(238, 240, 255, 0.62);
-  }
-
-  .hero__visual { position: relative; min-height: 340px; }
-
-  .glow {
-    position: absolute;
-    inset: -40px -20px -40px -20px;
-    background:
-      radial-gradient(380px 260px at 20% 20%, rgba(255, 111, 174, 0.22), transparent 65%),
-      radial-gradient(420px 300px at 80% 30%, rgba(167, 139, 250, 0.22), transparent 65%),
-      radial-gradient(460px 340px at 55% 85%, rgba(45, 212, 191, 0.10), transparent 65%);
-    filter: blur(18px);
-    opacity: 0.95;
-    pointer-events: none;
-  }
-
-  .preview { position: relative; z-index: 1; padding: 18px; }
-
-  .preview__top { display: flex; gap: 10px; align-items: center; }
-
-  .sparkle {
-    width: 42px;
-    height: 42px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
-    box-shadow: 0 18px 60px rgba(167, 139, 250, 0.18);
-  }
-
-  .preview__label { font-weight: 800; letter-spacing: 0.01em; }
-  .preview__small { margin-top: 2px; font-size: 12px; color: rgba(238, 240, 255, 0.65); }
-
-  .preview__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
-
-  .ph {
-    height: 120px;
-    border-radius: 14px;
-    border: 1px dashed rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.03);
-    display: grid;
-    place-items: center;
-    color: rgba(238, 240, 255, 0.72);
-    font-weight: 700;
-  }
-
-  .preview__hint { margin-top: 12px; font-size: 12px; color: rgba(238, 240, 255, 0.62); }
-
-  @media (max-width: 900px) {
-    .hero { padding: 52px 0 34px; }
-    .hero__grid { grid-template-columns: 1fr; }
-    .hero__visual { min-height: auto; }
-  }
-</style>

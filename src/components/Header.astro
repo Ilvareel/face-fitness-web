@@ -1,76 +1,33 @@
 ---
-import Container from "./ui/Container.astro";
 import Button from "./ui/Button.astro";
 import { getCheckoutUrl } from "../lib/checkout";
 
-const checkout = getCheckoutUrl({ content: "header_cta", medium: "header" });
+const checkoutUrl = getCheckoutUrl({ content: "header_cta", medium: "header" });
 ---
 
 <header class="site-header">
-  <Container>
-    <div class="header__inner">
-      <a
-        class="brand"
-        href="/"
-        data-ff-event="nav_click"
-        data-ff-content="brand"
-        aria-label="Face Fitness home"
-      >
-        Face Fitness
-      </a>
+  <div class="container header__inner">
+    <a class="brand" href="/" data-ff-event="nav_click" data-ff-content="brand">
+      Face Fitness
+    </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a href="#course" data-ff-event="nav_click" data-ff-content="course">Course</a>
-        <a href="/about" data-ff-event="nav_click" data-ff-content="about">About</a>
-        <a href="#faq" data-ff-event="nav_click" data-ff-content="faq">FAQ</a>
-        <a href="#free-tips" data-ff-event="nav_click" data-ff-content="free_tips">Free tips</a>
-      </nav>
+    <nav class="nav" aria-label="Primary">
+      <a href="#course" data-ff-event="nav_click" data-ff-content="course">Course</a>
+      <a href="/about" data-ff-event="nav_click" data-ff-content="about">Our story</a>
+      <a href="#faq" data-ff-event="nav_click" data-ff-content="faq">FAQs</a>
+      <a href="#free-tips" data-ff-event="nav_click" data-ff-content="free_tips">Free tips</a>
+    </nav>
 
-      <Button
-        href={checkout}
-        variant="primary"
-        target="_blank"
-        rel="noreferrer"
-        data-ff-event="checkout_click"
-        data-ff-content="header_cta"
-        data-ff-outbound="checkout"
-      >
-        Join the course
-      </Button>
-    </div>
-  </Container>
+    <Button
+      href={checkoutUrl}
+      variant="primary"
+      target="_blank"
+      rel="noreferrer"
+      data-ff-event="checkout_click"
+      data-ff-content="header_cta"
+      data-ff-outbound="checkout"
+    >
+      Join the course
+    </Button>
+  </div>
 </header>
-
-<style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    backdrop-filter: blur(10px);
-    background: rgba(7, 6, 19, 0.55);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .header__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 14px 0;
-  }
-
-  .brand { font-weight: 800; letter-spacing: 0.2px; }
-
-  .nav {
-    display: flex;
-    gap: 18px;
-    align-items: center;
-    color: rgba(238, 240, 255, 0.82);
-    font-size: 14px;
-  }
-
-  .nav a { padding: 8px; border-radius: 12px; }
-  .nav a:hover { background: rgba(255, 255, 255, 0.06); text-decoration: none; }
-
-  @media (max-width: 860px) { .nav { display: none; } }
-</style>

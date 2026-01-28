@@ -3,22 +3,23 @@ import Section from "../ui/Section.astro";
 ---
 
 <Section id="results" title="Results & social proof">
-  <div class="sp__grid">
+  <div class="grid grid--2">
     <div class="card">
-      <h3 class="sp__h">Before / After</h3>
-      <p class="muted sp__p">Placeholder examples — add real photos later.</p>
+      <h3 class="h3">Before / After</h3>
+      <p class="muted">Placeholder — add real examples later.</p>
 
-      <div class="sp__ba">
-        <div class="sp__ph">Before</div>
-        <div class="sp__ph">After</div>
-        <div class="sp__ph">Before</div>
-        <div class="sp__ph">After</div>
+      <div class="ba">
+        <div class="ph">Before</div>
+        <div class="ph">After</div>
+        <div class="ph">Before</div>
+        <div class="ph">After</div>
       </div>
     </div>
 
     <div class="card">
-      <h3 class="sp__h">What women say</h3>
-      <div class="sp__quotes">
+      <h3 class="h3">What women say</h3>
+
+      <div class="quotes">
         <blockquote>
           “After a few weeks my face looked more rested and open.”
           <cite>— Student A</cite>
@@ -34,48 +35,37 @@ import Section from "../ui/Section.astro";
       </div>
     </div>
   </div>
+
+  <style>
+    .ba{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    .ph{
+      height: 120px;
+      border-radius: 16px;
+      border: 1px dashed rgba(17,17,17,0.22);
+      background: rgba(255,255,255,0.55);
+      display:grid;
+      place-items:center;
+      color: rgba(17,17,17,0.55);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .quotes{ display:grid; gap: 12px; margin-top: 14px; }
+    blockquote{
+      margin: 0;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line-2);
+      background: rgba(255,255,255,0.55);
+      color: rgba(17,17,17,0.82);
+    }
+    cite{
+      display:block;
+      margin-top: 8px;
+      font-style: normal;
+      color: rgba(17,17,17,0.58);
+      font-size: 13px;
+    }
+  </style>
 </Section>
-
-<style>
-  .sp__grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 18px;
-    align-items: start;
-  }
-  .sp__h { margin: 0 0 8px; font-size: 18px; letter-spacing: -0.01em; }
-  .sp__p { margin: 0 0 14px; }
-
-  .sp__ba { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .sp__ph {
-    height: 120px;
-    border-radius: 14px;
-    border: 1px dashed rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.03);
-    display: grid;
-    place-items: center;
-    color: rgba(238, 240, 255, 0.72);
-    font-weight: 700;
-  }
-
-  .sp__quotes { display: grid; gap: 12px; }
-  blockquote {
-    margin: 0;
-    padding: 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    background: rgba(255, 255, 255, 0.03);
-    color: rgba(238, 240, 255, 0.86);
-  }
-  cite {
-    display: block;
-    margin-top: 8px;
-    font-style: normal;
-    color: rgba(238, 240, 255, 0.65);
-    font-size: 13px;
-  }
-
-  @media (max-width: 900px) {
-    .sp__grid { grid-template-columns: 1fr; }
-  }
-</style>

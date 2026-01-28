@@ -14,11 +14,11 @@ import { SITE } from "../lib/site";
       </div>
 
       <div class="footer__col">
-        <div class="footer__title">Links</div>
-        <a href="/privacy">Privacy</a><br />
-        <a href="/terms">Terms</a><br />
+        <div class="footer__title">Pages</div>
+        <a href="/about">Our story</a><br />
         <a href="/blog">Blog</a><br />
-        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a><br />
+        <a href="/terms">Terms</a>
       </div>
 
       <div class="footer__col">
@@ -28,44 +28,7 @@ import { SITE } from "../lib/site";
     </div>
 
     <div class="footer__bottom">
-      <span>© {new Date().getFullYear()} {SITE.name}</span>
+      © {new Date().getFullYear()} • {SITE.name}
     </div>
   </Container>
 </footer>
-
-<style>
-  .footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 42px 0 34px;
-    color: rgba(238, 240, 255, 0.82);
-  }
-
-  .footer__inner {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 18px;
-    align-items: start;
-  }
-
-  .footer__brand { font-weight: 900; letter-spacing: -0.01em; margin-bottom: 8px; }
-  .footer__title { font-weight: 900; margin-bottom: 10px; }
-
-  .footer__small {
-    margin: 0;
-    color: rgba(238, 240, 255, 0.68);
-    max-width: 62ch;
-  }
-
-  .footer a { color: rgba(238, 240, 255, 0.78); text-decoration: none; }
-  .footer a:hover { text-decoration: underline; }
-
-  .footer__bottom {
-    margin-top: 18px;
-    padding-top: 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    color: rgba(238, 240, 255, 0.62);
-    font-size: 12px;
-  }
-
-  @media (max-width: 860px) { .footer__inner { grid-template-columns: 1fr; } }
-</style>

@@ -3,17 +3,25 @@ import Section from "../ui/Section.astro";
 import FeatureGrid from "./FeatureGrid.astro";
 ---
 
-<Section id="benefits" title="What you can expect">
+<Section id="benefits" title="Natural and certified organic — skincare vibe (placeholder)">
   <div class="intro">
+    <h2 class="title">Healthy habits, wildly you</h2>
     <p class="muted">
-      The course focuses on habits and gentle techniques that influence how your face “holds” itself over time.
+      A course designed to support facial posture and reduce tension patterns—through consistent, gentle technique.
     </p>
   </div>
 
   <FeatureGrid />
 
   <style>
-    .intro { margin-bottom: 14px; max-width: 72ch; }
-    .intro p { margin: 0; }
+    .intro{ margin-bottom: 16px; max-width: 72ch; }
+    .title{
+      margin: 0 0 8px;
+      font-family: var(--font-serif);
+      font-size: clamp(30px, 3.8vw, 46px);
+      line-height: 1.06;
+      letter-spacing: -0.01em;
+    }
+    .intro p{ margin: 0; }
   </style>
 </Section>

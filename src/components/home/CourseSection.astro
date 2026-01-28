@@ -3,10 +3,10 @@ import Section from "../ui/Section.astro";
 import Button from "../ui/Button.astro";
 import { getCheckoutUrl } from "../../lib/checkout";
 
-const checkout = getCheckoutUrl({ content: "course_section", medium: "section" });
+const checkoutUrl = getCheckoutUrl({ content: "course_section", medium: "section" });
 ---
 
-<Section id="course" title="The course (hosted on the platform)">
+<Section id="course" title="Course">
   <div class="grid grid--2">
     <div class="card">
       <h3 class="h3">What you get</h3>
@@ -21,12 +21,12 @@ const checkout = getCheckoutUrl({ content: "course_section", medium: "section" }
     <div class="card join">
       <h3 class="h3">Join now</h3>
       <p class="muted">
-        Checkout and access are handled by the platform. This website is the learning + trust hub.
+        Checkout and access are handled by the platform. This website is the trust + learning hub.
       </p>
 
-      <div class="join__cta">
+      <div class="cta">
         <Button
-          href={checkout}
+          href={checkoutUrl}
           variant="primary"
           target="_blank"
           rel="noreferrer"
@@ -43,16 +43,16 @@ const checkout = getCheckoutUrl({ content: "course_section", medium: "section" }
           data-ff-event="scroll_click"
           data-ff-content="course_to_free_tips"
         >
-          Get free tips
+          Free tips
         </Button>
       </div>
 
-      <p class="join__note">Placeholder pricing: $100+ • Start anytime</p>
+      <p class="note">Placeholder pricing: $100+ • Start anytime</p>
     </div>
   </div>
 
   <style>
-    .join__cta { margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-    .join__note { margin: 12px 0 0; color: rgba(238, 240, 255, 0.62); font-size: 12px; }
+    .cta{ margin-top: 12px; display:flex; gap: 12px; flex-wrap: wrap; }
+    .note{ margin: 12px 0 0; font-size: 12px; color: rgba(17,17,17,0.58); }
   </style>
 </Section>
