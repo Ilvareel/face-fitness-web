@@ -1,40 +1,66 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Container from "../components/ui/Container.astro";
 import Section from "../components/ui/Section.astro";
 import Button from "../components/ui/Button.astro";
-
 import Hero from "../components/home/Hero.astro";
 import FeatureGrid from "../components/home/FeatureGrid.astro";
-import MethodSteps from "../components/home/MethodSteps.astro";
+import SocialProof from "../components/home/SocialProof.astro";
+import FAQ from "../components/home/FAQ.astro";
 import LeadMagnetForm from "../components/LeadMagnetForm.astro";
-
-import { getCheckoutUrl } from "../lib/checkout";
-import { SITE } from "../lib/site";
-
-const CHECKOUT_URL = getCheckoutUrl("course_section");
+import { checkoutUrl } from "../lib/checkout";
+import { siteName, siteDescription } from "../lib/site";
 ---
 
-<BaseLayout
-  title={`${SITE.name} — Lift and define your face naturally`}
-  description="A guided face fitness course for women who want fuller cheeks, a sharper jawline, and a more open look — without needles."
->
+<BaseLayout title={siteName} description={siteDescription}>
   <Hero />
 
   <main>
-    <Section id="expect" title="What you can expect">
+    <Section id="results" title="Results & social proof">
+      <SocialProof />
+    </Section>
+
+    <Section id="benefits" title="What you can expect">
       <FeatureGrid />
     </Section>
 
     <Section id="method" title="The method (why it’s different)">
-      <MethodSteps />
+      <div class="grid grid--2">
+        <div class="card">
+          <p class="muted" style="margin:0 0 8px;">Step 1</p>
+          <h3 class="h3">Tongue posture</h3>
+          <p class="muted">
+            Learn placement and cues (placeholder).
+          </p>
+        </div>
+        <div class="card">
+          <p class="muted" style="margin:0 0 8px;">Step 2</p>
+          <h3 class="h3">Breathing</h3>
+          <p class="muted">
+            Reduce shallow patterns, support better posture (placeholder).
+          </p>
+        </div>
+        <div class="card">
+          <p class="muted" style="margin:0 0 8px;">Step 3</p>
+          <h3 class="h3">Soft tissues</h3>
+          <p class="muted">
+            Gentle release + activation (placeholder).
+          </p>
+        </div>
+        <div class="card">
+          <p class="muted" style="margin:0 0 8px;">Step 4</p>
+          <h3 class="h3">Consistency</h3>
+          <p class="muted">
+            Short daily practice with progressive structure (placeholder).
+          </p>
+        </div>
+      </div>
     </Section>
 
     <Section id="course" title="The course (hosted on the platform)">
       <div class="grid grid--2">
         <div class="card">
-          <h3 style="margin-top:0;">What you get</h3>
-          <ul>
+          <h3 class="h3">What you get</h3>
+          <ul class="bullets">
             <li>Structured lessons + routine (placeholder)</li>
             <li>Technique cues and “common mistakes”</li>
             <li>Progress path (beginner → consistent habits)</li>
@@ -43,124 +69,65 @@ const CHECKOUT_URL = getCheckoutUrl("course_section");
         </div>
 
         <div class="card">
-          <h3 style="margin-top:0;">Join now</h3>
-          <p style="color:var(--muted);">
+          <h3 class="h3">Join now</h3>
+          <p class="muted">
             Checkout and access are handled by the platform. This website is the learning + trust hub.
           </p>
 
-          <a
-            class="btn btn--primary"
-            href={CHECKOUT_URL}
-            target="_blank"
-            rel="noreferrer"
+          <Button
+            href={checkoutUrl}
+            variant="primary"
             data-ff-event="checkout_click"
             data-ff-content="course_section"
           >
             Go to checkout
-          </a>
+          </Button>
 
-          <p class="hint">Placeholder pricing: $100+ • Start anytime</p>
-        </div>
-      </div>
-    </Section>
-
-    <Section id="results" title="Results & social proof">
-      <div class="grid grid--2">
-        <div class="card">
-          <h3 style="margin-top:0;">Before / After (placeholder)</h3>
-          <div class="grid grid--2" style="gap:12px;">
-            <div class="placeholder-box">Example 1</div>
-            <div class="placeholder-box">Example 2</div>
-            <div class="placeholder-box">Example 3</div>
-            <div class="placeholder-box">Example 4</div>
-          </div>
-          <p class="hint">Real examples will be added later.</p>
-        </div>
-
-        <div class="card">
-          <h3 style="margin-top:0;">What students say (placeholder)</h3>
-          <div class="quotes">
-            <blockquote>
-              “After a few weeks my face looked more rested and open.”
-              <cite>— Student A</cite>
-            </blockquote>
-            <blockquote>
-              “The routine is simple, I can actually stick to it.”
-              <cite>— Student B</cite>
-            </blockquote>
-            <blockquote>
-              “I didn’t realize how much tongue posture affects everything.”
-              <cite>— Student C</cite>
-            </blockquote>
-          </div>
+          <small class="help">Placeholder pricing: $100+ • Start anytime</small>
         </div>
       </div>
     </Section>
 
     <Section id="faq" title="FAQ">
-      <details class="faq" open>
-        <summary>When will I see results?</summary>
-        <p style="color:var(--muted);">
-          Consistency matters. Results vary based on habits, starting point, and frequency (placeholder).
-        </p>
-      </details>
-
-      <details class="faq">
-        <summary>Is it safe?</summary>
-        <p style="color:var(--muted);">
-          Gentle techniques, stop if you feel pain. This is not medical advice (placeholder).
-        </p>
-      </details>
-
-      <details class="faq">
-        <summary>How do I access the course?</summary>
-        <p style="color:var(--muted);">
-          You purchase on the platform; access is granted there. This site links to it.
-        </p>
-      </details>
-
-      <details class="faq">
-        <summary>Do I need equipment?</summary>
-        <p style="color:var(--muted);">No. Just your hands + consistency (placeholder).</p>
-      </details>
+      <FAQ />
     </Section>
 
     <Section id="free-tips" title="Free tips (email)">
       <div class="grid grid--2">
         <div class="card">
-          <h3 style="margin-top:0;">Get the free mini-guide</h3>
-          <p style="color:var(--muted);">
-            Placeholder: 3 quick tips to reduce facial tension and support a more open look.
+          <h3 class="h3">What you’ll get</h3>
+          <ul class="bullets" style="margin-top:10px;">
+            <li>3 quick tips to reduce facial tension</li>
+            <li>One tiny daily habit to keep results consistent</li>
+            <li>Gentle reminders + occasional updates</li>
+          </ul>
+
+          <p class="muted" style="margin-top:14px; margin-bottom:0;">
+            We respect your inbox. Unsubscribe anytime.
           </p>
-          <p class="hint">We respect your inbox. Unsubscribe anytime.</p>
+
+          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a
+              class="btn btn--primary"
+              href="#free-tips-form"
+              data-ff-event="lead_magnet_click"
+              data-ff-content="free_tips"
+            >
+              Get the guide
+            </a>
+
+            <a class="btn btn--ghost" href="/privacy">
+              Privacy
+            </a>
+          </div>
         </div>
 
-        <LeadMagnetForm />
+        <LeadMagnetForm
+          id="free-tips-form"
+          data-ff-event="lead_magnet_submit"
+          data-ff-content="free_tips_form"
+        />
       </div>
     </Section>
-
-    <Container>
-      <div class="footer-cta">
-        <Button
-          href={CHECKOUT_URL}
-          variant="primary"
-          target="_blank"
-          rel="noreferrer"
-          data-ff-event="checkout_click"
-          data-ff-content="footer_cta"
-        >
-          Join the course
-        </Button>
-
-        <Button
-          href="/about"
-          variant="secondary"
-          data-ff-event="internal_click"
-          data-ff-content="footer_about"
-        >
-          Learn about Alina
-        </Button>
-      </div>
-    </Container>
   </main>
 </BaseLayout>
