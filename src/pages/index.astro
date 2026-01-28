@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/ui/Section.astro";
 import Button from "../components/ui/Button.astro";
+import LeadMagnetForm from "../components/LeadMagnetForm.astro";
 
 const CHECKOUT_URL = "https://example.com/checkout"; // placeholder
 ---
@@ -64,19 +65,11 @@ const CHECKOUT_URL = "https://example.com/checkout"; // placeholder
   </Section>
 
   <Section id="free-tips" title="Free tips (email)">
-    <div class="card">
-      <p style="color:var(--muted);">
-        Placeholder — in Week 4 we connect this to MailerLite/ConvertKit.
-      </p>
-
-      <a
-        class="btn btn--secondary"
-        href="/thanks"
-        data-ff-event="lead_magnet_click"
-        data-ff-content="free_tips"
-      >
-        Get the free guide
-      </a>
-    </div>
-  </Section>
+	<div class="card">
+		<LeadMagnetForm />
+		<p class="micro" style="margin-top:10px;">
+		We respect your inbox. Unsubscribe anytime.
+		</p>
+	</div>
+	</Section>
 </BaseLayout>

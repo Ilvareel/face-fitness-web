@@ -1,15 +1,38 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/ui/Section.astro";
+import Button from "../components/ui/Button.astro";
+import { getCheckoutUrl } from "../lib/checkout";
+
+const checkout = getCheckoutUrl({ content: "thanks" });
 ---
 
-<BaseLayout title="About Alina • Face Fitness">
-  <Section title="About Alina">
+<BaseLayout title="Thank you! • Face Fitness">
+  <Section title="Thank you!">
     <div class="card">
-      <p style="color:var(--muted);max-width:70ch;">
-        Alina is a face fitness coach focused on natural methods combining tongue posture,
-        breathing and soft tissue work. (Placeholder text.)
+      <p class="muted" style="max-width:70ch;">
+        You’re on the list. If you don’t see the email within a few minutes, check spam/promotions.
       </p>
+
+      <h3 class="h3" style="margin-top:16px;">What’s next</h3>
+      <ul class="bullets">
+        <li>Save the first email (so tips don’t land in spam).</li>
+        <li>Start with one small habit today (tongue posture + calm breathing).</li>
+        <li>If you want the full structure, join the course.</li>
+      </ul>
+
+      <div class="stack" style="margin-top:14px;">
+        <Button
+          href={checkout}
+          variant="primary"
+          data-ff-event="cta_click"
+          data-ff-content="thanks"
+          data-ff-outbound="checkout"
+        >
+          Join the course
+        </Button>
+        <a class="btn btn--secondary" href="/">Back to home</a>
+      </div>
     </div>
   </Section>
 </BaseLayout>

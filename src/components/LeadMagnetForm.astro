@@ -1,0 +1,100 @@
+---
+const { title = "Get the free mini-guide", text = "3 quick tips to reduce facial tension and support a more open look." } = Astro.props;
+---
+<div class="leadmagnet">
+  <div class="leadmagnet__copy">
+    <h3 class="h3">{title}</h3>
+    <p class="muted">{text}</p>
+  </div>
+
+  <form class="leadmagnet__form" id="lead-form">
+    <label class="field">
+      <span class="field__label">Email</span>
+      <input class="input" type="email" name="email" autocomplete="email" required placeholder="you@example.com" />
+    </label>
+
+    <label class="field">
+      <span class="field__label">Name (optional)</span>
+      <input class="input" type="text" name="name" autocomplete="given-name" placeholder="Alina" />
+    </label>
+
+    <!-- Honeypot (hidden) -->
+    <div class="hp" aria-hidden="true">
+      <label>
+        Company
+        <input type="text" name="company" tabindex="-1" autocomplete="off" />
+      </label>
+    </div>
+
+    <label class="check">
+      <input type="checkbox" name="consent" required />
+      <span>
+        I agree to receive emails with the free guide and occasional tips. I can unsubscribe anytime.
+      </span>
+    </label>
+
+    <button class="btn btn--primary" type="submit" data-ff-event="lead_magnet_submit" data-ff-content="free_tips">
+      Get the guide
+    </button>
+
+    <p class="micro" id="lead-status" role="status" aria-live="polite"></p>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById("lead-form");
+  const statusEl = document.getElementById("lead-status");
+
+  function setStatus(msg, isError=false){
+    if (!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.style.color = isError ? "rgba(255,140,140,.9)" : "rgba(231,238,252,.75)";
+  }
+
+  function safeEvent(name, params){
+    try{
+      if (typeof window.gtag !== "function") return;
+      if (!window.__gaLoaded) return;
+      window.gtag("event", name, params || {});
+    } catch {}
+  }
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    setStatus("Submitting...");
+
+    const fd = new FormData(form);
+    const payload = {
+      email: String(fd.get("email") || "").trim(),
+      name: String(fd.get("name") || "").trim(),
+      consent: fd.get("consent") === "on",
+      company: String(fd.get("company") || "").trim(), // honeypot
+    };
+
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) btn.disabled = true;
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setStatus("Something went wrong. Please try again.", true);
+        safeEvent("lead_magnet_error", { error: data?.error || "unknown" });
+        if (btn) btn.disabled = false;
+        return;
+      }
+
+      safeEvent("lead_magnet_success", { source: "free_tips" });
+      window.location.href = "/thanks";
+    } catch {
+      setStatus("Network error. Please try again.", true);
+      safeEvent("lead_magnet_error", { error: "network" });
+      if (btn) btn.disabled = false;
+    }
+  });
+</script>

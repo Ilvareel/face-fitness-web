@@ -171,3 +171,42 @@ a:hover{ opacity:.9; }
   .footer__inner{ grid-template-columns: 1fr; }
   .cookie__inner{ flex-direction: column; align-items: flex-start; }
 }
+
+/* Lead magnet form */
+.leadmagnet{
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.leadmagnet__form{
+  display: grid;
+  gap: 10px;
+}
+.field{ display: grid; gap: 6px; }
+.field__label{ font-size: 13px; color: rgba(231,238,252,.75); }
+.input{
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  padding: 10px 12px;
+  color: var(--text);
+}
+.input:focus{
+  outline: none;
+  border-color: rgba(138,180,255,.6);
+}
+.check{
+  display:flex;
+  gap: 10px;
+  align-items:flex-start;
+  color: rgba(231,238,252,.75);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.hp{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+
+@media (max-width: 820px){
+  .leadmagnet{ grid-template-columns: 1fr; }
+}
