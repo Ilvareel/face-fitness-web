@@ -1,54 +1,60 @@
 ---
-const { title = "Get the free mini-guide", text = "3 quick tips to reduce facial tension and support a more open look." } = Astro.props;
+const {
+  id = "",
+  title = "Sign up for the mini-guide",
+  text = "We’ll send you the guide + occasional beauty-friendly tips. Unsubscribe anytime.",
+} = Astro.props;
+
+const formId = id ? `${id}-lead-form` : "lead-form";
+const statusId = id ? `${id}-lead-status` : "lead-status";
 ---
-<div class="leadmagnet">
-  <div class="leadmagnet__copy">
-    <h3 class="h3">{title}</h3>
-    <p class="muted">{text}</p>
-  </div>
 
-  <form class="leadmagnet__form" id="lead-form">
-    <label class="field">
-      <span class="field__label">Email</span>
-      <input class="input" type="email" name="email" autocomplete="email" required placeholder="you@example.com" />
-    </label>
+<div class="lm" id={id || undefined}>
+  <div class="lm__card card">
+    <h3 class="lm__h">{title}</h3>
+    <p class="lm__p muted">{text}</p>
 
-    <label class="field">
-      <span class="field__label">Name (optional)</span>
-      <input class="input" type="text" name="name" autocomplete="given-name" placeholder="Alina" />
-    </label>
-
-    <!-- Honeypot (hidden) -->
-    <div class="hp" aria-hidden="true">
-      <label>
-        Company
-        <input type="text" name="company" tabindex="-1" autocomplete="off" />
+    <form class="lm__form" id={formId}>
+      <label class="lm__field">
+        <span>Email</span>
+        <input type="email" name="email" autocomplete="email" required placeholder="you@example.com" />
       </label>
-    </div>
 
-    <label class="check">
-      <input type="checkbox" name="consent" required />
-      <span>
-        I agree to receive emails with the free guide and occasional tips. I can unsubscribe anytime.
-      </span>
-    </label>
+      <label class="lm__field">
+        <span>Name (optional)</span>
+        <input type="text" name="name" autocomplete="given-name" placeholder="Alina" />
+      </label>
 
-    <button class="btn btn--primary" type="submit" data-ff-event="lead_magnet_submit" data-ff-content="free_tips">
-      Get the guide
-    </button>
+      <!-- Honeypot (hidden) -->
+      <div class="lm__hp" aria-hidden="true">
+        <label>
+          Company
+          <input type="text" name="company" tabindex="-1" autocomplete="off" />
+        </label>
+      </div>
 
-    <p class="micro" id="lead-status" role="status" aria-live="polite"></p>
-  </form>
+      <label class="lm__check">
+        <input type="checkbox" name="consent" required />
+        <span>I agree to receive emails with the free guide and occasional tips. I can unsubscribe anytime.</span>
+      </label>
+
+      <button class="btn btn--primary" type="submit" data-ff-event="lead_magnet_submit" data-ff-content="free_tips">
+        Get the guide
+      </button>
+
+      <p class="lm__status" id={statusId} role="status" aria-live="polite"></p>
+    </form>
+  </div>
 </div>
 
-<script>
-  const form = document.getElementById("lead-form");
-  const statusEl = document.getElementById("lead-status");
+<script define:vars={{ formId, statusId }}>
+  const form = document.getElementById(formId);
+  const statusEl = document.getElementById(statusId);
 
   function setStatus(msg, isError=false){
     if (!statusEl) return;
     statusEl.textContent = msg;
-    statusEl.style.color = isError ? "rgba(255,140,140,.9)" : "rgba(231,238,252,.75)";
+    statusEl.style.color = isError ? "rgba(255,140,140,.9)" : "rgba(238, 240, 255, 0.75)";
   }
 
   function safeEvent(name, params){
@@ -68,7 +74,7 @@ const { title = "Get the free mini-guide", text = "3 quick tips to reduce facial
       email: String(fd.get("email") || "").trim(),
       name: String(fd.get("name") || "").trim(),
       consent: fd.get("consent") === "on",
-      company: String(fd.get("company") || "").trim(), // honeypot
+      company: String(fd.get("company") || "").trim(),
     };
 
     const btn = form.querySelector('button[type="submit"]');
@@ -98,3 +104,47 @@ const { title = "Get the free mini-guide", text = "3 quick tips to reduce facial
     }
   });
 </script>
+
+<style>
+  .lm__card { padding: 20px; }
+  .lm__h { margin: 0; font-size: 20px; letter-spacing: -0.01em; }
+  .lm__p { margin: 10px 0 0; }
+
+  .lm__form { margin-top: 14px; display: grid; gap: 10px; }
+
+  .lm__field { display: grid; gap: 6px; }
+  .lm__field span { font-size: 13px; color: rgba(238, 240, 255, 0.74); }
+
+  .lm__field input {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(10, 10, 26, 0.45);
+    color: var(--fg);
+    outline: none;
+  }
+  .lm__field input:focus {
+    border-color: rgba(255, 111, 174, 0.45);
+    box-shadow: 0 0 0 4px rgba(255, 111, 174, 0.12);
+  }
+
+  .lm__check {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: rgba(238, 240, 255, 0.72);
+    line-height: 1.35;
+    margin-top: 2px;
+  }
+
+  .lm__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .lm__status { margin: 2px 0 0; font-size: 13px; min-height: 18px; }
+</style>

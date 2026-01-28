@@ -1,0 +1,67 @@
+---
+import Section from "../ui/Section.astro";
+import Button from "../ui/Button.astro";
+---
+
+<Section id="faq" title="FAQ">
+  <div class="faq">
+    <details class="faq__item" open>
+      <summary>When will I see results?</summary>
+      <p class="muted">Consistency matters. Results vary based on habits, starting point, and frequency (placeholder).</p>
+    </details>
+
+    <details class="faq__item">
+      <summary>Is it safe?</summary>
+      <p class="muted">Gentle approach. Stop if you feel pain. This is not medical advice (placeholder).</p>
+    </details>
+
+    <details class="faq__item">
+      <summary>Do I need equipment?</summary>
+      <p class="muted">No. Just your hands and consistency.</p>
+    </details>
+
+    <details class="faq__item">
+      <summary>How do I access the course?</summary>
+      <p class="muted">You purchase on the platform; access is granted there. This site links to it.</p>
+    </details>
+
+    <div class="faq__cta">
+      <Button href="#free-tips" variant="primary" data-ff-event="scroll_click" data-ff-content="faq_to_free_tips">
+        Get the free mini-guide
+      </Button>
+    </div>
+  </div>
+
+  <style>
+    .faq { display: grid; gap: 12px; }
+
+    .faq__item {
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 14px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      list-style: none;
+      outline: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "+";
+      float: right;
+      color: rgba(238, 240, 255, 0.7);
+      font-weight: 900;
+    }
+
+    details[open] summary::after { content: "–"; }
+
+    .faq__item p { margin: 10px 0 0; }
+    .faq__cta { margin-top: 6px; }
+  </style>
+</Section>

@@ -1,0 +1,48 @@
+---
+import Section from "../ui/Section.astro";
+import LeadMagnetForm from "../LeadMagnetForm.astro";
+---
+
+<Section id="free-tips" title="Free tips (email)">
+  <div class="grid grid--2 ft">
+    <div class="card">
+      <h3 class="ft__h">Get the free mini-guide</h3>
+      <p class="muted ft__p">3 quick tips to reduce facial tension and support a more open look.</p>
+
+      <ul class="bullets ft__list">
+        <li>One daily habit you can start today</li>
+        <li>Simple cues for tongue posture</li>
+        <li>Gentle reminders + occasional updates</li>
+      </ul>
+
+      <p class="ft__note">We respect your inbox. Unsubscribe anytime.</p>
+
+      <div class="ft__links">
+        <a class="link" href="/privacy">Privacy</a>
+        <span class="sep" aria-hidden="true">•</span>
+        <a class="link" href="/terms">Terms</a>
+      </div>
+    </div>
+
+    <LeadMagnetForm id="free-tips-form" />
+  </div>
+
+  <style>
+    .ft__h { margin: 0 0 10px; font-size: 20px; letter-spacing: -0.01em; }
+    .ft__p { margin: 0 0 12px; }
+    .ft__list { margin-top: 10px; }
+    .ft__note { margin: 12px 0 0; font-size: 12px; color: rgba(238, 240, 255, 0.62); }
+
+    .ft__links {
+      margin-top: 12px;
+      font-size: 13px;
+      color: rgba(238, 240, 255, 0.72);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .link:hover { text-decoration: underline; }
+    .sep { opacity: 0.6; }
+  </style>
+</Section>

@@ -1,0 +1,19 @@
+---
+import Section from "../ui/Section.astro";
+import FeatureGrid from "./FeatureGrid.astro";
+---
+
+<Section id="benefits" title="What you can expect">
+  <div class="intro">
+    <p class="muted">
+      The course focuses on habits and gentle techniques that influence how your face “holds” itself over time.
+    </p>
+  </div>
+
+  <FeatureGrid />
+
+  <style>
+    .intro { margin-bottom: 14px; max-width: 72ch; }
+    .intro p { margin: 0; }
+  </style>
+</Section>
