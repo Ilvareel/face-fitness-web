@@ -26,10 +26,10 @@ html, body { height: 100%; }
 body{
   margin: 0;
   color: var(--ink);
-  background:
+  /*background:
     radial-gradient(900px 500px at 20% 0%, rgba(107,63,34,0.08), transparent 60%),
     radial-gradient(900px 500px at 80% 20%, rgba(138,90,61,0.06), transparent 62%),
-    linear-gradient(180deg, var(--paper), var(--paper-2));
+    linear-gradient(180deg, var(--paper), var(--paper-2));*/
   font-family: var(--font-sans);
   line-height: 1.55;
 }
@@ -58,7 +58,10 @@ a:hover{ text-decoration: underline; }
 }
 
 /* Section wrapper */
-.section{ padding: 72px 0; }
+.section{ 
+  padding: 72px 0;
+  background: radial-gradient(900px 500px at 20% 0%, rgba(107, 63, 34, 0.08), transparent 60%), radial-gradient(900px 500px at 80% 20%, rgba(138, 90, 61, 0.06), transparent 62%), linear-gradient(180deg, var(--paper), var(--paper-2));
+ }
 .section__title{
   margin: 0 0 14px;
   font-size: 12px;
