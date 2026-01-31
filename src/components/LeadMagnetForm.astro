@@ -1,144 +1,200 @@
 ---
 const {
-  id = "",
-  title = "Sign up for the mini-guide",
-  text = "We’ll send you the guide + occasional beauty-friendly tips. Unsubscribe anytime.",
+  title = "Get the free mini-guide",
+  text = "3 quick tips to reduce facial tension and support a more open look.",
 } = Astro.props;
-
-const formId = id ? `${id}-lead-form` : "lead-form";
-const statusId = id ? `${id}-lead-status` : "lead-status";
 ---
 
-<div class="lm" id={id || undefined}>
-  <div class="lm__card card">
-    <h3 class="lm__h">{title}</h3>
-    <p class="lm__p muted">{text}</p>
-
-    <form class="lm__form" id={formId}>
-      <label class="lm__field">
-        <span>Email</span>
-        <input type="email" name="email" autocomplete="email" required placeholder="you@example.com" />
-      </label>
-
-      <label class="lm__field">
-        <span>Name (optional)</span>
-        <input type="text" name="name" autocomplete="given-name" placeholder="Alina" />
-      </label>
-
-      <!-- Honeypot (hidden) -->
-      <div class="lm__hp" aria-hidden="true">
-        <label>
-          Company
-          <input type="text" name="company" tabindex="-1" autocomplete="off" />
-        </label>
-      </div>
-
-      <label class="lm__check">
-        <input type="checkbox" name="consent" required />
-        <span>I agree to receive emails with the free guide and occasional tips. I can unsubscribe anytime.</span>
-      </label>
-
-      <button class="btn btn--primary" type="submit" data-ff-event="lead_magnet_submit" data-ff-content="free_tips">
-        Get the guide
-      </button>
-
-      <p class="lm__status" id={statusId} role="status" aria-live="polite"></p>
-    </form>
+<div class="leadmagnet">
+  <div class="leadmagnet__copy">
+    <h3 class="h3">{title}</h3>
+    <p class="muted">{text}</p>
   </div>
+
+  <form class="leadmagnet__form" id="lead-form" novalidate>
+    <label class="field">
+      <span class="field__label">Email</span>
+      <input
+        class="input"
+        type="email"
+        name="email"
+        autocomplete="email"
+        inputmode="email"
+        placeholder="you@example.com"
+        required
+      />
+    </label>
+
+    <label class="field">
+      <span class="field__label">Name (optional)</span>
+      <input
+        class="input"
+        type="text"
+        name="name"
+        autocomplete="name"
+        placeholder="Alina"
+      />
+    </label>
+
+    <label class="check">
+      <input class="check__input" type="checkbox" name="consent" required />
+      <span class="check__text">
+        I agree to receive emails with the free guide and occasional tips. I can
+        unsubscribe anytime.
+      </span>
+    </label>
+
+    <!-- Honeypot -->
+    <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" />
+
+    <button
+      class="btn btn--primary"
+      type="submit"
+      data-ff-event="lead_magnet_submit"
+      data-ff-content="free_tips"
+    >
+      Get the guide
+    </button>
+
+    <p class="status" id="lead-status" aria-live="polite"></p>
+  </form>
 </div>
 
-<script define:vars={{ formId, statusId }}>
-  const form = document.getElementById(formId);
-  const statusEl = document.getElementById(statusId);
+<script>
+  const form = document.getElementById("lead-form");
+  const status = document.getElementById("lead-status");
 
-  function setStatus(msg, isError=false){
-    if (!statusEl) return;
-    statusEl.textContent = msg;
-    statusEl.style.color = isError ? "rgba(255,140,140,.9)" : "rgba(238, 240, 255, 0.75)";
-  }
-
-  function safeEvent(name, params){
-    try{
-      if (typeof window.gtag !== "function") return;
-      if (!window.__gaLoaded) return;
-      window.gtag("event", name, params || {});
-    } catch {}
+  function setStatus(message, type = "info") {
+    status.textContent = message || "";
+    status.dataset.type = type;
   }
 
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    setStatus("Submitting...");
+    setStatus("");
 
     const fd = new FormData(form);
-    const payload = {
-      email: String(fd.get("email") || "").trim(),
-      name: String(fd.get("name") || "").trim(),
-      consent: fd.get("consent") === "on",
-      company: String(fd.get("company") || "").trim(),
-    };
+    const email = (fd.get("email") || "").toString().trim().toLowerCase();
+    const name = (fd.get("name") || "").toString().trim();
+    const consent = Boolean(fd.get("consent"));
+    const company = (fd.get("company") || "").toString().trim(); // honeypot
 
-    const btn = form.querySelector('button[type="submit"]');
-    if (btn) btn.disabled = true;
+    // let bots “succeed” silently
+    if (company) {
+      window.location.href = "/thanks";
+      return;
+    }
+
+    if (!email || !email.includes("@")) {
+      setStatus("Please enter a valid email.", "error");
+      return;
+    }
+    if (!consent) {
+      setStatus("Please confirm email consent (checkbox).", "error");
+      return;
+    }
 
     try {
+      setStatus("Submitting…", "info");
+
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ email, name, consent, company }),
       });
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setStatus("Something went wrong. Please try again.", true);
-        safeEvent("lead_magnet_error", { error: data?.error || "unknown" });
-        if (btn) btn.disabled = false;
+      const json = await res.json().catch(() => null);
+
+      if (!res.ok || !json?.ok) {
+        setStatus("Something went wrong. Please try again.", "error");
         return;
       }
 
-      safeEvent("lead_magnet_success", { source: "free_tips" });
+      setStatus("Success! Redirecting…", "success");
       window.location.href = "/thanks";
     } catch {
-      setStatus("Network error. Please try again.", true);
-      safeEvent("lead_magnet_error", { error: "network" });
-      if (btn) btn.disabled = false;
+      setStatus("Network error. Please try again.", "error");
     }
   });
 </script>
 
 <style>
-  .lm__card { padding: 20px; }
-  .lm__h { margin: 0; font-size: 20px; letter-spacing: -0.01em; }
-  .lm__p { margin: 10px 0 0; }
+  /* Component-scoped “beauty” form styling (consistent with your brand variables) */
+  .leadmagnet {
+    background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.82));
+    border: 1px solid rgba(17, 17, 17, 0.10);
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.10);
+    backdrop-filter: blur(10px);
+  }
 
-  .lm__form { margin-top: 14px; display: grid; gap: 10px; }
+  .leadmagnet__copy { margin-bottom: 10px; }
 
-  .lm__field { display: grid; gap: 6px; }
-  .lm__field span { font-size: 13px; color: rgba(238, 240, 255, 0.74); }
+  .field {
+    display: grid;
+    gap: 6px;
+    margin-top: 12px;
+  }
 
-  .lm__field input {
+  .field__label {
+    font-size: 12px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(17, 17, 17, 0.72);
+  }
+
+  .input {
+    width: 100%;
     padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(10, 10, 26, 0.45);
-    color: var(--fg);
+    border-radius: 14px;
+    border: 1px solid rgba(17, 17, 17, 0.16);
+    background: rgba(255, 255, 255, 0.98);
+    color: var(--ink);
     outline: none;
-  }
-  .lm__field input:focus {
-    border-color: rgba(255, 111, 174, 0.45);
-    box-shadow: 0 0 0 4px rgba(255, 111, 174, 0.12);
+    transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
   }
 
-  .lm__check {
+  .input::placeholder {
+    color: rgba(17, 17, 17, 0.42);
+  }
+
+  .input:focus {
+    border-color: rgba(107, 63, 38, 0.45);
+    box-shadow: 0 0 0 5px rgba(107, 63, 38, 0.14);
+    background: #fff;
+  }
+
+  /* Fix Chrome autofill “ugly” background + keep text readable */
+  .input:-webkit-autofill,
+  .input:-webkit-autofill:hover,
+  .input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.98) inset;
+    -webkit-text-fill-color: var(--ink);
+    transition: background-color 9999s ease-in-out 0s;
+  }
+
+  .check {
     display: flex;
     gap: 10px;
     align-items: flex-start;
-    font-size: 13px;
-    color: rgba(238, 240, 255, 0.72);
-    line-height: 1.35;
-    margin-top: 2px;
+    margin-top: 12px;
+    color: rgba(17, 17, 17, 0.78);
   }
 
-  .lm__hp {
+  .check__input {
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+  }
+
+  .check__text {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .hp {
     position: absolute;
     left: -9999px;
     width: 1px;
@@ -146,5 +202,16 @@ const statusId = id ? `${id}-lead-status` : "lead-status";
     overflow: hidden;
   }
 
-  .lm__status { margin: 2px 0 0; font-size: 13px; min-height: 18px; }
+  .status {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .status[data-type="info"] { color: rgba(17,17,17,0.70); }
+  .status[data-type="success"] { color: rgba(34, 106, 77, 0.92); }
+  .status[data-type="error"] { color: rgba(160, 46, 46, 0.95); }
+
+  @media (min-width: 720px) {
+    .leadmagnet { padding: 26px; }
+  }
 </style>
