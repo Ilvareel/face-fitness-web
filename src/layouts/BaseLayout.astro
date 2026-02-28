@@ -14,6 +14,9 @@ const canonicalUrl = canonical || url.origin + url.pathname;
 
 // GA4 ID (public env)
 const ga4Id = import.meta.env.PUBLIC_GA4_ID ?? "";
+
+// Indexing control (default: OFF until launch)
+const allowIndexing = (import.meta.env.PUBLIC_ALLOW_INDEXING ?? "false") === "true";
 ---
 <!doctype html>
 <html lang="en">
@@ -23,6 +26,13 @@ const ga4Id = import.meta.env.PUBLIC_GA4_ID ?? "";
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+
+    {!allowIndexing && (
+      <>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
+      </>
+    )}
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
