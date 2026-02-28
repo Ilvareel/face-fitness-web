@@ -2,7 +2,15 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/ui/Section.astro";
 ---
-<BaseLayout title="About Alina • Face Fitness">
+<!-- Week 5 – SEO/OG meta: per-page title/description/ogType/ogImage -->
+<!-- Edit these props if you want to change how the page appears in Google + social previews. -->
+
+<BaseLayout
+  title="About Alina | Face Fitness Coach"
+  description="Meet Alina, a face fitness coach focused on natural methods—tongue posture, breathing, and gentle soft tissue work—to build sustainable daily habits."
+  ogType="profile"
+  ogImage="/og-alina.jpg"
+>
   <Section title="About Alina">
     <div class="grid grid--2">
       <div class="card">

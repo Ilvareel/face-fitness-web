@@ -7,6 +7,8 @@ const {
   title = "Face Fitness by Alina",
   description = "A guided face fitness course for women. Natural methods combining tongue posture, breathing and soft tissue work.",
   canonical = "",
+  ogImage = "", // optional override per page (absolute URL or /path)
+  ogType = "website",
 } = Astro.props;
 
 const url = new URL(Astro.request.url);
@@ -17,13 +19,31 @@ const ga4Id = import.meta.env.PUBLIC_GA4_ID ?? "";
 
 // Indexing control (default: OFF until launch)
 const allowIndexing = (import.meta.env.PUBLIC_ALLOW_INDEXING ?? "false") === "true";
+
+// Global SEO helper
+const siteName = "Face Fitness by Alina";
+
+// Title template:
+// - if title already contains a separator (| or •), keep as-is (prevents double branding)
+// - if title equals siteName, keep as-is
+// - else append " | siteName"
+const hasSeparator = typeof title === "string" && (title.includes("|") || title.includes("•"));
+const finalTitle =
+  !title || title === siteName || hasSeparator ? title : `${title} | ${siteName}`;
+
+// OG image fallback (absolute URL required by most platforms)
+const defaultOgImagePath = "/og-default.jpg"; // next step will add this file in /public
+const ogImageRaw = ogImage || defaultOgImagePath;
+const ogImageUrl = ogImageRaw.startsWith("http")
+  ? ogImageRaw
+  : new URL(ogImageRaw, url.origin).toString();
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{title}</title>
+    <title>{finalTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
 
@@ -34,10 +54,17 @@ const allowIndexing = (import.meta.env.PUBLIC_ALLOW_INDEXING ?? "false") === "tr
       </>
     )}
 
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={finalTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={finalTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Fonts (Skinn-like editorial vibe) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

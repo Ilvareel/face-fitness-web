@@ -3,7 +3,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/ui/Section.astro";
 ---
 
-<BaseLayout title="Privacy Policy • Face Fitness">
+<!-- Week 5 – SEO/OG meta: per-page title/description/ogType/ogImage -->
+<!-- Edit these props if you want to change how the page appears in Google + social previews. -->
+
+<BaseLayout
+  title="Privacy Policy | Face Fitness"
+  description="How Face Fitness handles email subscriptions, analytics consent, and third-party services. Learn what we collect and how you can manage consent."
+  ogType="website"
+  ogImage="/og-default.jpg"
+>
   <Section title="Privacy Policy">
     <div class="card">
       <p style="color:var(--muted);max-width:75ch;line-height:1.6;">

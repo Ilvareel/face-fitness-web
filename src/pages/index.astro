@@ -11,9 +11,14 @@ import FAQSection from "../components/home/FAQSection.astro";
 import FreeTipsSection from "../components/home/FreeTipsSection.astro";
 ---
 
+<!-- Week 5 – SEO/OG meta: per-page title/description/ogType/ogImage -->
+<!-- Edit these props if you want to change how the page appears in Google + social previews. -->
+
 <BaseLayout
-  title={`${SITE.brandLine}`}
-  description="A guided face fitness course for women. Natural methods combining tongue posture, breathing and soft tissue work."
+  title="Face Fitness Course for Women | Natural Lift & Definition"
+  description="A gentle, structured face fitness routine combining tongue posture, breathing, and soft tissue work—designed to support a more lifted, open look."
+  ogType="website"
+  ogImage="/og-home.jpg"
 >
   <main>
     <HeroSection />
