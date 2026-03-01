@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
+import { SITE } from "../lib/site";
 
 const {
   title = "Face Fitness by Alina",
@@ -9,6 +10,7 @@ const {
   canonical = "",
   ogImage = "", // optional override per page (absolute URL or /path)
   ogType = "website",
+  schema = null, // Week 5 – Schema.org (JSON-LD): per-page schema object or array
 } = Astro.props;
 
 const url = new URL(Astro.request.url);
@@ -32,11 +34,38 @@ const finalTitle =
   !title || title === siteName || hasSeparator ? title : `${title} | ${siteName}`;
 
 // OG image fallback (absolute URL required by most platforms)
-const defaultOgImagePath = "/og-default.jpg"; // next step will add this file in /public
+const defaultOgImagePath = "/og-default.jpg";
 const ogImageRaw = ogImage || defaultOgImagePath;
 const ogImageUrl = ogImageRaw.startsWith("http")
   ? ogImageRaw
   : new URL(ogImageRaw, url.origin).toString();
+
+// Week 5 – Schema.org (JSON-LD): base structured data + optional per-page schema
+const origin = url.origin;
+
+const baseSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${origin}/#website`,
+    "url": `${origin}/`,
+    "name": SITE.name,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${origin}/#organization`,
+    "name": SITE.name,
+    "url": `${origin}/`,
+    "email": SITE.supportEmail,
+  },
+];
+
+const pageSchema = schema
+  ? (Array.isArray(schema) ? schema : [schema])
+  : [];
+
+const schemaJsonLd = JSON.stringify([...baseSchema, ...pageSchema]);
 ---
 <!doctype html>
 <html lang="en">
@@ -46,6 +75,9 @@ const ogImageUrl = ogImageRaw.startsWith("http")
     <title>{finalTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Week 5 – Schema.org (JSON-LD) -->
+    <script type="application/ld+json" set:html={schemaJsonLd}></script>
 
     {!allowIndexing && (
       <>

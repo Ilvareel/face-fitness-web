@@ -9,6 +9,26 @@ import MethodSection from "../components/home/MethodSection.astro";
 import CourseSection from "../components/home/CourseSection.astro";
 import FAQSection from "../components/home/FAQSection.astro";
 import FreeTipsSection from "../components/home/FreeTipsSection.astro";
+
+const origin = new URL(Astro.request.url).origin;
+
+// Week 5 – Schema.org (JSON-LD): homepage Course structured data
+const homepageSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": `${origin}/#course`,
+  "name": "Face Fitness Course for Women",
+  "description":
+    "A gentle, structured face fitness routine combining tongue posture, breathing, and soft tissue work—designed to support a more lifted, open look.",
+  "provider": {
+    "@type": "Organization",
+    "@id": `${origin}/#organization`,
+    "name": SITE.name,
+    "url": `${origin}/`,
+  },
+  "url": `${origin}/`,
+  "inLanguage": "en",
+};
 ---
 
 <!-- Week 5 – SEO/OG meta: per-page title/description/ogType/ogImage -->
@@ -19,6 +39,7 @@ import FreeTipsSection from "../components/home/FreeTipsSection.astro";
   description="A gentle, structured face fitness routine combining tongue posture, breathing, and soft tissue work—designed to support a more lifted, open look."
   ogType="website"
   ogImage="/og-home.jpg"
+  schema={homepageSchema}
 >
   <main>
     <HeroSection />
