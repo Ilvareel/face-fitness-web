@@ -12,6 +12,7 @@
     "astro": "^5.16.15"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260128.0"
+    "@cloudflare/workers-types": "^4.20260128.0",
+    "@types/node": "^25.3.3"
   }
 }
