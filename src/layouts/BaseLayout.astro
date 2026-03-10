@@ -113,6 +113,32 @@ const schemaJsonLd = JSON.stringify([...baseSchema, ...pageSchema]);
 
     <link rel="stylesheet" href="/styles/global.css" />
 
+    <!-- Week 5 – Accessibility improvements -->
+    <style>
+      .skip-link{
+        position: absolute;
+        left: 16px;
+        top: 16px;
+        transform: translateY(-200%);
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: #111;
+        color: #fff;
+        text-decoration: none;
+        z-index: 1000;
+        transition: transform 0.2s ease;
+      }
+
+      .skip-link:focus{
+        transform: translateY(0);
+      }
+
+      :where(a, button, input, select, textarea, summary, video):focus-visible{
+        outline: 2px solid #6b3f22;
+        outline-offset: 3px;
+      }
+    </style>
+
     <!-- Consent Mode v2 + GA loader (loads GA only after accept) -->
     <script define:vars={{ ga4Id }}>
       // Simple consent storage key (stable)
@@ -228,7 +254,7 @@ const schemaJsonLd = JSON.stringify([...baseSchema, ...pageSchema]);
 
     <Header />
 
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
 

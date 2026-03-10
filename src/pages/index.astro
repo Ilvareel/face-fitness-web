@@ -33,6 +33,7 @@ const homepageSchema = {
 
 <!-- Week 5 – SEO/OG meta: per-page title/description/ogType/ogImage -->
 <!-- Edit these props if you want to change how the page appears in Google + social previews. -->
+<!-- Week 5 – Accessibility improvements: avoid nested <main> landmarks. -->
 
 <BaseLayout
   title="Face Fitness Course for Women | Natural Lift & Definition"
@@ -41,13 +42,11 @@ const homepageSchema = {
   ogImage="/og-home.jpg"
   schema={homepageSchema}
 >
-  <main>
-    <HeroSection />
-    <SocialProofSection />
-    <BenefitsSection />
-    <MethodSection />
-    <CourseSection />
-    <FAQSection />
-    <FreeTipsSection />
-  </main>
+  <HeroSection />
+  <SocialProofSection />
+  <BenefitsSection />
+  <MethodSection />
+  <CourseSection />
+  <FAQSection />
+  <FreeTipsSection />
 </BaseLayout>
