@@ -74,7 +74,7 @@ const heroPosterUrl = "https://pub-8b341dd923b44e5a8332a91f57cd8601.r2.dev/hero/
               class="hero__video"
               preload="metadata"
               poster={heroPosterUrl}
-              controls={false}
+              controls
               playsinline
               data-hero-video
               aria-label="Face Fitness course preview video"
@@ -274,6 +274,11 @@ const heroPosterUrl = "https://pub-8b341dd923b44e5a8332a91f57cd8601.r2.dev/hero/
         min-height: 280px;
       }
       .hero__meta{ grid-template-columns: 1fr; }
+    }
+    @media (hover: none) and (pointer: coarse){
+      .hero__playButton{
+        display: none;
+      }
     }
 
     /*Custom CSS styles*/
