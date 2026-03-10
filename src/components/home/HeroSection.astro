@@ -4,6 +4,11 @@ import Button from "../ui/Button.astro";
 import { getCheckoutUrl } from "../../lib/checkout";
 
 const checkoutUrl = getCheckoutUrl({ content: "hero", medium: "hero" });
+
+// Week 5 – Hero video (R2 test asset)
+// Later you can swap only the file URLs below and keep the component unchanged.
+const heroVideoUrl = "https://pub-8b341dd923b44e5a8332a91f57cd8601.r2.dev/hero/hero-video.mp4";
+const heroPosterUrl = "https://pub-8b341dd923b44e5a8332a91f57cd8601.r2.dev/hero/hero-poster.jpg";
 ---
 
 <section class="hero" aria-label="Hero">
@@ -56,17 +61,72 @@ const checkoutUrl = getCheckoutUrl({ content: "hero", medium: "hero" });
         </div>
       </div>
 
-      <div class="hero__image" aria-hidden="true">
+      <div class="hero__image">
         <div class="hero__imgPanel">
           <div class="hero__imgTop">
             <span class="hero__imgBadge">Featured</span>
-            <span class="hero__imgSmall muted">Placeholder visuals</span>
+            <span class="hero__imgSmall muted">Preview video</span>
           </div>
-          <div class="hero__imgPlaceholder">Image</div>
+
+          <div class="hero__media" data-hero-video-wrap>
+            <!-- Week 5 – Hero video (R2 test asset) -->
+            <video
+              class="hero__video"
+              preload="metadata"
+              poster={heroPosterUrl}
+              controls
+              playsinline
+              data-hero-video
+            >
+              <source src={heroVideoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            <button
+              class="hero__playButton"
+              type="button"
+              aria-label="Play video"
+              data-hero-play
+            >
+              <span class="hero__playIcon" aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </Container>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const wrap = document.querySelector("[data-hero-video-wrap]");
+      const video = document.querySelector("[data-hero-video]");
+      const playButton = document.querySelector("[data-hero-play]");
+
+      if (!wrap || !video || !playButton) return;
+
+      const showOverlay = () => {
+        wrap.classList.remove("is-playing");
+      };
+
+      const hideOverlay = () => {
+        wrap.classList.add("is-playing");
+      };
+
+      playButton.addEventListener("click", async () => {
+        try {
+          video.muted = false;
+          await video.play();
+          hideOverlay();
+        } catch (error) {
+          console.error("Hero video could not start:", error);
+        }
+      });
+
+      video.addEventListener("play", hideOverlay);
+      video.addEventListener("pause", showOverlay);
+      video.addEventListener("ended", showOverlay);
+    });
+  </script>
 
   <style>
     .hero{ padding: 84px 0 48px; }
@@ -133,23 +193,79 @@ const checkoutUrl = getCheckoutUrl({ content: "hero", medium: "hero" });
       padding: 8px 12px;
       border-radius: 999px;
     }
-    .hero__imgPlaceholder{
-      height: 360px;
+
+    .hero__media{
+      position: relative;
+      width: 100%;
+      min-height: 360px;
+      aspect-ratio: 16 / 10;
       background:
         linear-gradient(180deg, rgba(107,63,34,0.08), transparent 55%),
         linear-gradient(90deg, rgba(17,17,17,0.04), rgba(17,17,17,0.02));
-      display:grid;
-      place-items:center;
-      color: rgba(17,17,17,0.55);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      overflow: hidden;
+    }
+
+    .hero__video{
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #d9d2cc;
+    }
+
+    .hero__playButton{
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      background:
+        linear-gradient(180deg, rgba(17,17,17,0.08), rgba(17,17,17,0.2));
+      transition: opacity 0.2s ease;
+    }
+
+    .hero__playButton:hover .hero__playIcon{
+      transform: scale(1.04);
+    }
+
+    .hero__playIcon{
+      width: 84px;
+      height: 84px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.14);
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .hero__playIcon::before{
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-40%, -50%);
+      width: 0;
+      height: 0;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-left: 18px solid #6b3f22;
+    }
+
+    .hero__media.is-playing .hero__playButton{
+      opacity: 0;
+      pointer-events: none;
     }
 
     @media (max-width: 900px){
       .hero{ padding: 58px 0 34px; }
       .hero__grid{ grid-template-columns: 1fr; }
-      .hero__imgPlaceholder{ height: 280px; }
+      .hero__media{
+        min-height: 280px;
+      }
       .hero__meta{ grid-template-columns: 1fr; }
     }
 
