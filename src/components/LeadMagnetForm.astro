@@ -44,8 +44,17 @@ const {
       </span>
     </label>
 
-    <!-- Honeypot -->
-    <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" />
+    <!-- Week 5 – Accessibility improvements: labeled honeypot field -->
+    <div class="hp" aria-hidden="true">
+      <label for="company-field">Company</label>
+      <input
+        id="company-field"
+        type="text"
+        name="company"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </div>
 
     <button
       class="btn btn--primary"
