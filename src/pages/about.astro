@@ -6,35 +6,70 @@ import Section from "../components/ui/Section.astro";
 <!-- Edit these props if you want to change how the page appears in Google + social previews. -->
 
 <BaseLayout
-  title="About Alina | Face Fitness Coach"
-  description="Meet Alina, a face fitness coach focused on natural methods—tongue posture, breathing, and gentle soft tissue work—to build sustainable daily habits."
+  title="About Alina — Medical & Facial Aesthetics Expert"
+  description="12+ years in healthcare and cosmetology. Discover a natural, structured approach to facial balance and beauty."
   ogType="profile"
-  ogImage="/og-alina.jpg"
+  ogImage="https://pub-8b341dd923b44e5a8332a91f57cd8601.r2.dev/og-images/og-alina.png"
 >
   <Section title="About Alina">
     <div class="grid grid--2">
       <div class="card">
         <p class="muted">
-          Placeholder bio: Alina is a face fitness coach focused on natural methods that combine
-          tongue posture, breathing, and soft tissue work to support a more lifted, open look.
+          Hi, I’m Alina.
+        </p>
+        <p class="muted">
+          I have over 12 years of experience working in the medical field and a professional background in both healthcare and cosmetology. Throughout my career, I have always been fascinated by the connection between health, anatomy, and natural beauty.
+        </p>
+        <p class="muted">
+          Over time, I became especially interested in how facial muscles, posture, breathing, and everyday habits influence the way our face changes.
+        </p>
+        <p class="muted">
+          Instead of relying on aggressive procedures, I began exploring natural methods that support the face from within — through awareness, muscle balance, and gentle manual techniques.
+        </p>
+        <p class="muted">
+          Before sharing any methods with others, I always test them on myself first. Only after seeing real, positive changes do I include them in my practice and teaching.
+        </p>
+        <p class="muted">
+          This personal exploration eventually became the foundation of my program, Facial Volume Harmony — a structured system of facial exercises and gentle techniques designed to support natural facial volume, balance, and a more expressive lower face.
         </p>
 
-        <ul class="bullets">
-          <li>Focus: women of all ages</li>
-          <li>Style: gentle, structured, consistent</li>
-          <li>Goal: habits that you can keep long-term</li>
-        </ul>
-
-        <p class="micro">
-          Final bio and credentials will be added by Alina.
-        </p>
       </div>
 
+
       <div class="card">
-        <h3 class="h3">Photo / profile (placeholder)</h3>
-        <div class="visual__box" style="height:220px;">Alina photo</div>
-        <p class="micro">We’ll replace this with a real portrait + short story.</p>
+        <div class="alina-photo-wrap">
+          <img
+            src="https://pub-8b341dd923b44e5a8332a91f57cd8601.r2.dev/hero/about-alina.png"
+            alt="Portrait of Alina"
+            class="alina-photo"
+            loading="lazy"
+          />
+        </div>
       </div>
     </div>
   </Section>
 </BaseLayout>
+
+<style>
+  .alina-photo-wrap {
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #f4f0ea;
+    aspect-ratio: 4 / 5;
+  }
+
+  .alina-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  @media (max-width: 767px) {
+    .alina-photo-wrap {
+      aspect-ratio: 3 / 4;
+    }
+  }
+</style>
