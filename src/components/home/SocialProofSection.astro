@@ -1,57 +1,313 @@
 ---
 import Section from "../ui/Section.astro";
+
+const cases = [
+  {
+    before: "https://cdn.facialvolumeharmony.com/socialproof/example1before.jpeg",
+    after: "https://cdn.facialvolumeharmony.com/socialproof/example1after.jpeg",
+    altBefore: "Before result example 1",
+    altAfter: "After result example 1",
+    label: "Example 1",
+  },
+  {
+    before: "https://cdn.facialvolumeharmony.com/socialproof/example2before.jpeg",
+    after: "https://cdn.facialvolumeharmony.com/socialproof/example2after.jpeg",
+    altBefore: "Before result example 2",
+    altAfter: "After result example 2",
+    label: "Example 2",
+  },
+  {
+    before: "https://cdn.facialvolumeharmony.com/socialproof/example3before.jpeg",
+    after: "https://cdn.facialvolumeharmony.com/socialproof/example3after.jpeg",
+    altBefore: "Before result example 3",
+    altAfter: "After result example 3",
+    label: "Example 3",
+  },
+  {
+    before: "https://cdn.facialvolumeharmony.com/socialproof/example4before.jpeg",
+    after: "https://cdn.facialvolumeharmony.com/socialproof/example4after.jpeg",
+    altBefore: "Before result example 4",
+    altAfter: "After result example 4",
+    label: "Example 4",
+  },
+  {
+    before: "https://cdn.facialvolumeharmony.com/socialproof/example5before.jpeg",
+    after: "https://cdn.facialvolumeharmony.com/socialproof/example5after.jpeg",
+    altBefore: "Before result example 5",
+    altAfter: "After result example 5",
+    label: "Example 5",
+  },
+  {
+    before: "https://cdn.facialvolumeharmony.com/socialproof/example6before.jpeg",
+    after: "https://cdn.facialvolumeharmony.com/socialproof/example6after.jpeg",
+    altBefore: "Before result example 6",
+    altAfter: "After result example 6",
+    label: "Example 6",
+  },
+];
 ---
 
 <Section id="results" title="Results & social proof">
   <div class="grid grid--2">
-    <div class="card">
+    <div class="card" data-results-left>
       <h3 class="h3">Before / After</h3>
-      <p class="muted">Placeholder — add real examples later.</p>
+      <p class="muted">Real examples of visible change with consistent practice.</p>
 
-      <div class="ba">
-        <div class="ph">Before</div>
-        <div class="ph">After</div>
-        <div class="ph">Before</div>
-        <div class="ph">After</div>
+      <div class="baSlider" data-ba-slider data-ba-labels={JSON.stringify(cases.map((item) => item.label))}>
+        <div class="baStage">
+          {cases.map((item, index) => (
+            <div class={`baSlide ${index === 0 ? "is-active" : ""}`} data-ba-slide aria-hidden={index === 0 ? "false" : "true"}>
+              <div class="baPair">
+                <figure class="baFigure">
+                  <div class="baTag">Before</div>
+                  <img src={item.before} alt={item.altBefore} loading={index === 0 ? "eager" : "lazy"} />
+                </figure>
+
+                <figure class="baFigure">
+                  <div class="baTag">After</div>
+                  <img src={item.after} alt={item.altAfter} loading={index === 0 ? "eager" : "lazy"} />
+                </figure>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="baFooter">
+          <div class="baCaseLabel" data-ba-label>{cases[0].label}</div>
+
+          <div class="baControls" aria-label="Before and after examples navigation">
+            <button class="baArrow" type="button" data-ba-prev aria-label="Previous example">
+              ←
+            </button>
+
+            <div class="baDots" role="tablist" aria-label="Select example">
+              {cases.map((_, dotIndex) => (
+                <button
+                  class={`baDot ${dotIndex === 0 ? "is-active" : ""}`}
+                  type="button"
+                  role="tab"
+                  aria-label={`Show example ${dotIndex + 1}`}
+                  aria-selected={dotIndex === 0 ? "true" : "false"}
+                  data-ba-dot
+                  data-index={dotIndex}
+                />
+              ))}
+            </div>
+
+            <button class="baArrow" type="button" data-ba-next aria-label="Next example">
+              →
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="card">
+    <div class="card quotesCard" data-results-right>
       <h3 class="h3">What women say</h3>
 
-      <div class="quotes">
+      <div class="quotes" data-results-quotes>
         <blockquote>
-          “After a few weeks my face looked more rested and open.”
-          <cite>— Student A</cite>
+          “I didn’t expect such small changes to make such a visible difference. My face feels more lifted, and my jawline looks more defined. I started noticing the first changes after about 3 weeks, and I’m still continuing — I want to see how much more is possible.”
+          <cite>— Kate, 34</cite>
         </blockquote>
         <blockquote>
-          “The routine is simple — I can actually stick to it.”
-          <cite>— Student B</cite>
+          “I was a bit skeptical at first, but after a few weeks I started noticing subtle changes. My face looks more lifted, and my posture feels better overall. It’s become something I’m learning to stay consistent with — and I’m really glad I started.”
+          <cite>— Isabella, 41</cite>
         </blockquote>
         <blockquote>
-          “I didn’t realize how much tongue posture affects everything.”
-          <cite>— Student C</cite>
+          “What I love most is how simple and structured everything is. It’s not overwhelming, and it actually fits into my daily routine. I feel more aware of my face and how I hold it throughout the day.”
+          <cite>— Maria, 29</cite>
+        </blockquote>
+        <blockquote>
+          “Over time, my lower face became much more defined — especially the jawline. It looks cleaner and more structured now. At the same time, my eyes appear more open and rested, which I didn’t expect at all.”
+          <cite>— Sophia, 42</cite>
+        </blockquote>
+        <blockquote>
+          “I started noticing subtle changes after a few weeks, but what surprised me most was how my cheekbones began to look fuller and more defined. My face feels more lifted, but still completely natural. It doesn’t look “done” — just better.”
+          <cite>— Emma, 36</cite>
         </blockquote>
       </div>
     </div>
   </div>
 
+  <script>
+    document.querySelectorAll("[data-ba-slider]").forEach((slider) => {
+      const slides = Array.from(slider.querySelectorAll("[data-ba-slide]"));
+      const dots = Array.from(slider.querySelectorAll("[data-ba-dot]"));
+      const prevButtons = Array.from(slider.querySelectorAll("[data-ba-prev]"));
+      const nextButtons = Array.from(slider.querySelectorAll("[data-ba-next]"));
+      const label = slider.querySelector("[data-ba-label]");
+      const caseLabels = JSON.parse(slider.dataset.baLabels || "[]");
+
+      if (!slides.length) return;
+
+      let currentIndex = 0;
+
+      const render = () => {
+        slides.forEach((slide, index) => {
+          const active = index === currentIndex;
+          slide.classList.toggle("is-active", active);
+          slide.setAttribute("aria-hidden", active ? "false" : "true");
+        });
+
+        dots.forEach((dot, index) => {
+          const active = index === currentIndex;
+          dot.classList.toggle("is-active", active);
+          dot.setAttribute("aria-selected", active ? "true" : "false");
+        });
+
+        if (label && caseLabels[currentIndex]) {
+          label.textContent = caseLabels[currentIndex];
+        }
+      };
+
+      const goTo = (index) => {
+        currentIndex = (index + slides.length) % slides.length;
+        render();
+      };
+
+      prevButtons.forEach((button) => {
+        button.addEventListener("click", () => goTo(currentIndex - 1));
+      });
+
+      nextButtons.forEach((button) => {
+        button.addEventListener("click", () => goTo(currentIndex + 1));
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const index = Number(dot.dataset.index || 0);
+          goTo(index);
+        });
+      });
+
+      render();
+    });
+  </script>
+
   <style>
-    .ba{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
-    .ph{
-      height: 120px;
-      border-radius: 16px;
-      border: 1px dashed rgba(17,17,17,0.22);
-      background: rgba(255,255,255,0.55);
-      display:grid;
-      place-items:center;
-      color: rgba(17,17,17,0.55);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 12px;
+    .baSlider{
+      margin-top: 14px;
     }
 
-    .quotes{ display:grid; gap: 12px; margin-top: 14px; }
+    .baStage{
+      position: relative;
+    }
+
+    .baSlide{
+      display: none;
+    }
+
+    .baSlide.is-active{
+      display: block;
+    }
+
+    .baPair{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .baFigure{
+      margin: 0;
+    }
+
+    .baFigure img{
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--line-2);
+      background: rgba(255,255,255,0.55);
+    }
+
+    .baTag{
+      margin-bottom: 8px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #4A342A;
+    }
+
+    .baFooter{
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .baCaseLabel{
+      font-size: 13px;
+      color: rgba(17,17,17,0.58);
+      text-align: center;
+    }
+
+    .baControls{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .baArrow{
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid var(--line-2);
+      background: rgba(255,255,255,0.75);
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .baArrow:hover{
+      background: rgba(255,255,255,0.95);
+      transform: translateY(-1px);
+    }
+
+    .baDots{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .baDot{
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      border: 0;
+      padding: 0;
+      background: rgba(17,17,17,0.18);
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+
+    .baDot.is-active{
+      background: var(--accent);
+      transform: scale(1.15);
+    }
+
+    .quotesCard{
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      height: 563px;
+    }
+
+    .quotes{
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 6px;
+      scrollbar-gutter: stable;
+    }
+
     blockquote{
       margin: 0;
       padding: 14px;
@@ -60,12 +316,41 @@ import Section from "../ui/Section.astro";
       background: rgba(255,255,255,0.55);
       color: rgba(17,17,17,0.82);
     }
+
     cite{
-      display:block;
+      display: block;
       margin-top: 8px;
       font-style: normal;
       color: rgba(17,17,17,0.58);
       font-size: 13px;
+    }
+
+    @media (max-width: 1153px){
+      .quotesCard{
+        height: 520px;
+      }
+    }
+
+    @media (max-width: 980px){
+      .quotesCard{
+        height: 480px;
+      }
+    }
+
+    @media (max-width: 900px){
+      .quotesCard{
+        height: 380px;
+      }
+    }
+
+    @media (max-width: 560px){
+      .baPair{
+        grid-template-columns: 1fr;
+      }
+
+      .quotesCard{
+        height: 600px;
+      }
     }
   </style>
 </Section>
