@@ -1,7 +1,7 @@
 ---
 const {
-  title = "Get the free mini-guide",
-  text = "3 quick tips to reduce facial tension and support a more open look.",
+  title = "Get your discount code",
+  text = "Enter your email and we’ll instantly send you a $20 discount code for the full program ($119 → $99).",
 } = Astro.props;
 ---
 
@@ -39,8 +39,7 @@ const {
     <label class="check">
       <input class="check__input" type="checkbox" name="consent" required />
       <span class="check__text">
-        I agree to receive emails with the free guide and occasional tips. I can
-        unsubscribe anytime.
+        I agree to receive emails. I can unsubscribe anytime.
       </span>
     </label>
 
@@ -62,7 +61,7 @@ const {
       data-ff-event="lead_magnet_submit"
       data-ff-content="free_tips"
     >
-      Get the guide
+      Get the discount
     </button>
 
     <p class="status" id="lead-status" aria-live="polite"></p>
