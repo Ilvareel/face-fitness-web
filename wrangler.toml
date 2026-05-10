@@ -1,0 +1,7 @@
+name = "face-fitness-web"
+compatibility_date = "2026-05-10"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fvh_course_access"
+database_id = "85126d77-38ea-40af-a298-95d80d566c19"
