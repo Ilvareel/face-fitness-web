@@ -4,7 +4,7 @@ export const SITE = {
   supportEmail: "hello@facialvolumeharmony.com",
 
   // TODO: neskôr sem dáš reálny checkout link z platformy (Teachable/Kajabi/Thinkific)
-  checkoutBaseUrl: "https://example.com/checkout",
+  checkoutBaseUrl: "https://facialvolumeharmony.lemonsqueezy.com/checkout/buy/9303a3e5-ddde-4d83-ace0-10680c290661",
 
   utm: {
     source: "facialvolumeharmony",
