@@ -97,28 +97,29 @@ async function signPayload(payload: string, secret: string): Promise<string> {
 
 async function createAccessCookie(emailNormalized: string, secret: string): Promise<string> {
   const expiresAt = Date.now() + COOKIE_MAX_AGE_SECONDS * 1000;
-  const payload = `${emailNormalized}.${expiresAt}`;
+  const emailEncoded = encodeURIComponent(emailNormalized);
+  const payload = `${emailEncoded}|${expiresAt}`;
   const signature = await signPayload(payload, secret);
 
-  return `${payload}.${signature}`;
+  return `${payload}|${signature}`;
 }
 
 async function verifyAccessCookie(cookieValue: string, secret: string): Promise<string | null> {
-  const parts = cookieValue.split(".");
+  const parts = cookieValue.split("|");
   if (parts.length !== 3) return null;
 
-  const [emailNormalized, expiresAtRaw, signature] = parts;
+  const [emailEncoded, expiresAtRaw, signature] = parts;
   const expiresAt = Number(expiresAtRaw);
 
-  if (!emailNormalized || !Number.isFinite(expiresAt)) return null;
+  if (!emailEncoded || !Number.isFinite(expiresAt)) return null;
   if (Date.now() > expiresAt) return null;
 
-  const payload = `${emailNormalized}.${expiresAtRaw}`;
+  const payload = `${emailEncoded}|${expiresAtRaw}`;
   const expectedSignature = await signPayload(payload, secret);
 
   if (!safeEqual(signature, expectedSignature)) return null;
 
-  return emailNormalized;
+  return decodeURIComponent(emailEncoded);
 }
 
 async function isPaidCustomer(db: D1Database, emailNormalized: string): Promise<boolean> {
