@@ -58,7 +58,7 @@ export const courseLessons: CourseLesson[] = [
       {
         type: "html",
         title: "Preparation & Safety Principles",
-        materialId: "lesson-1",
+        materialId: "lesson-2",
       },
     ],
   },
@@ -89,7 +89,7 @@ export const courseLessons: CourseLesson[] = [
       {
         type: "html",
         title: "Practice notes",
-        materialId: "lesson-2",
+        materialId: "lesson-3",
       },
     ],
   },

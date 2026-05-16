@@ -19,19 +19,6 @@ export function renderLessonBlock(block: LessonBlock): string {
   }
 
   if (block.type === "html") {
-    const material = courseMaterials[block.materialId];
-
-    if (!material) {
-      return `
-        <section class="media-card">
-          <h2>${escapeHtml(block.title)}</h2>
-          <p class="placeholder-note">
-            Material not found: <code>${escapeHtml(block.materialId)}</code>
-          </p>
-        </section>
-      `;
-    }
-
     return `
       <section class="media-card">
         <div class="material-heading">
