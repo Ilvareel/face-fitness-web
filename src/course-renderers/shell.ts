@@ -389,38 +389,30 @@ export function renderCourseShell(params: {
         border-color: var(--accent-dark);
       }
 
-      .html-material-frame {
+        .html-material-frame {
         border: 1px solid var(--line);
         border-radius: 22px;
-        background: linear-gradient(180deg, #fff 0%, #f7f1ea 100%);
+        background: #fff;
+        height: min(72vh, 760px);
         min-height: 520px;
-        padding: 24px;
-        overflow: auto;
-      }
+        overflow: hidden;
+        }
 
-      .html-material-placeholder {
-        width: min(100%, 620px);
-        min-height: 430px;
-        margin: 0 auto;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: #fffdfa;
-        padding: 34px;
-        box-shadow: 0 20px 50px rgba(17, 17, 17, 0.08);
-      }
+        .html-material-frame:fullscreen {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        border: 0;
+        background: #fff;
+        }
 
-      .html-material-placeholder strong {
+        .html-material-iframe {
         display: block;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: 2rem;
-        letter-spacing: -0.04em;
-        margin-bottom: 12px;
-      }
-
-      .html-material-placeholder p {
-        color: var(--muted);
-        line-height: 1.7;
-      }
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #fff;
+        }
 
       .nav-row {
         display: flex;

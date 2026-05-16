@@ -1,4 +1,5 @@
 import type { LessonBlock } from "../course-data/course";
+import { courseMaterials } from "../course-data/materials";
 import { escapeHtml } from "./utils";
 
 export function renderLessonBlock(block: LessonBlock): string {
@@ -18,21 +19,41 @@ export function renderLessonBlock(block: LessonBlock): string {
   }
 
   if (block.type === "html") {
+    const material = courseMaterials[block.materialId];
+
+    if (!material) {
+      return `
+        <section class="media-card">
+          <h2>${escapeHtml(block.title)}</h2>
+          <p class="placeholder-note">
+            Material not found: <code>${escapeHtml(block.materialId)}</code>
+          </p>
+        </section>
+      `;
+    }
+
     return `
       <section class="media-card">
         <div class="material-heading">
           <h2>${escapeHtml(block.title)}</h2>
-          <button class="fullscreen-button" type="button">Open full screen</button>
+          <button
+            class="fullscreen-button"
+            type="button"
+            onclick="this.closest('.media-card')?.querySelector('.html-material-frame')?.requestFullscreen?.()"
+          >
+            Open full screen
+          </button>
         </div>
 
         <div class="html-material-frame" role="region" aria-label="Protected lesson material">
-          <div class="html-material-placeholder">
-            <strong>${escapeHtml(block.title)}</strong>
-            <p>
-              Protected HTML material placeholder. Later this will load material ID:
-              <code>${escapeHtml(block.materialId)}</code>
-            </p>
-          </div>
+          <iframe
+            class="html-material-iframe"
+            title="${escapeHtml(block.title)}"
+            srcdoc="${escapeHtml(material)}"
+            loading="lazy"
+            sandbox=""
+            referrerpolicy="no-referrer"
+          ></iframe>
         </div>
       </section>
     `;

@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Lesson 2: Technical Guidelines | Facial Volume Harmony</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --fvh-bg: #f7f2ed;
+      --fvh-bg-soft: #fbf8f4;
+      --fvh-paper: rgba(255, 252, 248, 0.80);
+      --fvh-ink: #4a4039;
+      --fvh-muted: #7b6c61;
+      --fvh-accent: #d7b59c;
+      --fvh-accent-dark: #b88e73;
+      --fvh-line: rgba(74, 64, 57, 0.13);
+      --fvh-shadow: 0 28px 80px rgba(74, 64, 57, 0.12);
+      --fvh-radius-lg: 34px;
+      --fvh-radius-md: 24px;
+      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      scroll-behavior: smooth;
+      background: var(--fvh-bg);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--fvh-ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.75;
+      background:
+        radial-gradient(circle at top left, rgba(215, 181, 156, 0.22), transparent 32rem),
+        radial-gradient(circle at 85% 18%, rgba(255, 255, 255, 0.72), transparent 24rem),
+        linear-gradient(180deg, #f7f2ed 0%, #fbf8f4 48%, #f3ebe3 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(74, 64, 57, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 64, 57, 0.018) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+    }
+
+    .lesson-shell {
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: clamp(24px, 5vw, 64px) clamp(18px, 4vw, 42px);
+    }
+
+    .lesson-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--fvh-line);
+      border-radius: var(--fvh-radius-lg);
+      background:
+        linear-gradient(145deg, rgba(255, 252, 248, 0.94), rgba(246, 239, 232, 0.76)),
+        var(--fvh-paper);
+      box-shadow: var(--fvh-shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .lesson-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 9px;
+      background: linear-gradient(90deg, #cfa98f, #ead4c2, #cfa98f);
+    }
+
+    .lesson-inner {
+      padding: clamp(30px, 6vw, 72px);
+    }
+
+    .lesson-header {
+      margin-bottom: clamp(30px, 5vw, 52px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--fvh-accent-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.65;
+    }
+
+    h1 {
+      max-width: 820px;
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5.7rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 0.92;
+      color: var(--fvh-ink);
+    }
+
+    .intro {
+      max-width: 780px;
+      margin-top: clamp(28px, 4vw, 40px);
+      display: grid;
+      gap: 18px;
+    }
+
+    .intro p,
+    .section p,
+    .notes p {
+      margin: 0;
+      color: var(--fvh-ink);
+      font-size: clamp(1rem, 1.5vw, 1.075rem);
+      letter-spacing: -0.012em;
+    }
+
+    .intro p:first-child {
+      color: #3f3731;
+      font-size: clamp(1.08rem, 1.9vw, 1.22rem);
+      line-height: 1.82;
+    }
+
+    .content-grid {
+      display: grid;
+      gap: clamp(18px, 3vw, 28px);
+    }
+
+    .section {
+      position: relative;
+      padding: clamp(22px, 4vw, 34px);
+      border: 1px solid rgba(74, 64, 57, 0.11);
+      border-radius: var(--fvh-radius-md);
+      background: linear-gradient(135deg, rgba(255, 252, 248, 0.86), rgba(241, 229, 218, 0.52));
+      box-shadow: 0 14px 38px rgba(74, 64, 57, 0.055);
+    }
+
+    .section h2 {
+      margin: 0 0 16px;
+      color: var(--fvh-ink);
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+    }
+
+    .section h3 {
+      margin: 24px 0 12px;
+      color: var(--fvh-ink);
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 3vw, 2.15rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+    }
+
+    .section h3:first-child {
+      margin-top: 0;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 22px 0;
+      background: linear-gradient(90deg, transparent, rgba(74, 64, 57, 0.15), transparent);
+    }
+
+    ul,
+    ol {
+      margin: 12px 0 0;
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    li {
+      position: relative;
+      padding-left: 30px;
+      color: var(--fvh-ink);
+      font-size: clamp(1rem, 1.5vw, 1.055rem);
+      letter-spacing: -0.012em;
+    }
+
+    li::before {
+      content: "•";
+      position: absolute;
+      left: 8px;
+      top: 0;
+      color: var(--fvh-accent-dark);
+      font-weight: 700;
+    }
+
+    .check-list li::before {
+      content: "✓";
+      left: 4px;
+    }
+
+    .warn-list li::before {
+      content: "!";
+      left: 5px;
+      width: 17px;
+      height: 17px;
+      border-radius: 999px;
+      display: inline-grid;
+      place-items: center;
+      margin-top: 5px;
+      color: #fffaf6;
+      background: var(--fvh-accent-dark);
+      font-size: 0.72rem;
+      line-height: 1;
+    }
+
+    .numbered {
+      counter-reset: step;
+    }
+
+    .numbered li {
+      padding-left: 40px;
+    }
+
+    .numbered li::before {
+      counter-increment: step;
+      content: counter(step);
+      left: 0;
+      top: 2px;
+      width: 25px;
+      height: 25px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      color: #fffaf6;
+      background: var(--fvh-accent-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .soft-note {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-left: 3px solid var(--fvh-accent-dark);
+      border-radius: 18px;
+      background: rgba(255, 252, 248, 0.72);
+    }
+
+    .soft-note p {
+      color: var(--fvh-muted);
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    .image-wrap {
+      margin: clamp(10px, 3vw, 22px) auto;
+      width: min(100%, 620px);
+      padding: clamp(14px, 3vw, 24px);
+      border: 1px solid rgba(74, 64, 57, 0.11);
+      border-radius: 28px;
+      background: rgba(255, 252, 248, 0.82);
+      box-shadow: 0 18px 44px rgba(74, 64, 57, 0.09);
+    }
+
+    .image-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+    }
+
+    @media (min-width: 980px) {
+      .lesson-inner {
+        max-width: 860px;
+        margin: 0 auto;
+      }
+
+      .lesson-header {
+        position: static;
+        margin-bottom: clamp(30px, 5vw, 52px);
+      }
+
+      .content-grid {
+        padding-top: 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .lesson-shell {
+        padding-inline: 12px;
+      }
+
+      .lesson-card {
+        border-radius: 26px;
+      }
+
+      .lesson-inner {
+        padding: 28px 20px;
+      }
+
+      li {
+        padding-left: 26px;
+      }
+    }
+
+    @media print {
+      @page {
+        margin: 18mm;
+      }
+
+      body {
+        background: #ffffff;
+      }
+
+      body::before {
+        display: none;
+      }
+
+      .lesson-shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .lesson-card {
+        box-shadow: none;
+        border: 0;
+        border-radius: 0;
+      }
+
+      .lesson-card::before {
+        display: none;
+      }
+
+      .lesson-inner {
+        display: block;
+        padding: 0;
+      }
+
+      .lesson-header {
+        position: static;
+        margin-bottom: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="lesson-shell" aria-label="Lesson 2: Technical Guidelines">
+    <article class="lesson-card">
+      <div class="lesson-inner">
+        <header class="lesson-header">
+          <p class="eyebrow">Facial Volume Harmony</p>
+          <h1>Lesson 2: Technical Guidelines</h1>
+
+          <div class="intro">
+            <p>Before we begin the practical part of the course, let’s go over a few important technical points.</p>
+            <p>If you have any questions during the course, you are welcome to message me directly.</p>
+            <p>Below, you will also find key recommendations and answers to the most frequently asked questions — please take a moment to review them carefully. You may find that your question has already been answered here.</p>
+          </div>
+        </header>
+
+        <section class="content-grid">
+          <section class="section">
+            <h2>📸 “Before” Photos</h2>
+            <p>Before starting the course, it is important to take “before” photos. This will help you objectively track changes throughout your practice.</p>
+            <p>If possible, avoid using the front-facing camera, as it can distort facial proportions. Ideally, ask someone else to take the photos for you.</p>
+
+            <div class="divider" aria-hidden="true"></div>
+
+            <h3>How to Take Proper Photos</h3>
+            <p>Your appearance at any given moment can be influenced by many factors, including mood, fatigue, menstrual cycle (for women), facial puffiness, weight fluctuations, lighting, and even small changes in camera angle. The distance between your face and the camera also plays a significant role, especially when taking selfies.</p>
+            <p>To ensure your photos are accurate and comparable over time, please follow these guidelines:</p>
+
+            <h3>Take two photos:</h3>
+            <ul>
+              <li>front view</li>
+              <li>profile view</li>
+            </ul>
+
+            <h3>Shooting conditions:</h3>
+            <ul class="check-list">
+              <li>stand upright facing the light source (preferably against a light, neutral background)</li>
+              <li>look straight ahead, keeping your gaze horizontal</li>
+              <li>keep your face relaxed, without smiling</li>
+              <li>avoid wearing makeup</li>
+              <li>if you have long hair, tie it back</li>
+            </ul>
+          </section>
+
+          <section class="section">
+            <h2>If You Are Taking a Selfie</h2>
+            <ul class="warn-list">
+              <li>take photos while standing</li>
+              <li>hold the phone at a distance of fully extended arms — this helps prevent distortion</li>
+              <li>keep the phone perfectly vertical, without tilting</li>
+              <li>hold the phone with both hands to avoid shoulder misalignment</li>
+            </ul>
+
+            <div class="divider" aria-hidden="true"></div>
+
+            <h3>Important for Future Photos</h3>
+            <p>For future comparison photos, try to photograph yourself in the same location and under the same conditions each time. Pay attention to the position of your nostrils and ears to maintain a consistent angle, and keep the same distance from the camera.</p>
+            <p>If you are taking selfies, always use the distance of fully extended arms.</p>
+            <p>Make sure your hairstyle remains the same and that photos are taken without makeup.</p>
+          </section>
+
+          <section class="section">
+            <h2>📘 Course Overview</h2>
+            <p>It is recommended to return to this section throughout the course whenever questions arise. Here you will find the key principles and guidelines that will help you navigate the practice more confidently.</p>
+            <p>At first, it may seem like there are many exercises and it may not be immediately clear how much to do and in what order. This is completely normal. In the beginning, it is recommended to try all of the techniques, and over time keep only those that feel most relevant and supportive for you.</p>
+            <p>The most important things are not to rush and to practice with patience.</p>
+            <p>With time, the process will become clearer and more natural. Everything is much simpler than it may seem at first glance 👌</p>
+
+            <div class="divider" aria-hidden="true"></div>
+
+            <h3>Basic Practice Plan</h3>
+            <ul>
+              <li>Bring gentle awareness to tongue position throughout the day whenever you remember.</li>
+              <li>Try to practice physiologically appropriate swallowing as awareness develops.</li>
+              <li>Manual techniques take about 10 minutes and are performed 1–2 times per day (you may divide them between morning and evening if preferred).</li>
+              <li>During the first 10–14 days, place special focus on relaxing the jaw muscles and the back of the head. After that, continue as needed.</li>
+            </ul>
+          </section>
+
+          <section class="section">
+            <h2>❓ Frequently Asked Questions</h2>
+
+            <h3>⚠️ Contraindications</h3>
+            <p>The practice is not recommended in the following cases:</p>
+            <ul>
+              <li>use of orthodontic appliances or braces</li>
+              <li>post-operative period in the oral cavity</li>
+              <li>post-operative period involving the face or head</li>
+              <li>acute inflammatory conditions</li>
+              <li>pronounced facial nerve neuralgia</li>
+              <li>severe temporomandibular joint dysfunction (persistent pain, significant discomfort, or limited mouth opening)</li>
+              <li>acute mental health conditions</li>
+            </ul>
+
+            <div class="soft-note">
+              <p>➡️ If you are unsure, it is recommended to consult a qualified specialist.</p>
+            </div>
+
+            <div class="divider" aria-hidden="true"></div>
+
+            <h3>✔️ Common Questions</h3>
+            <ul>
+              <li>Practice is generally acceptable with dental implants, bridges, or retainers.</li>
+              <li>Mild sounds or sensations in the palate during techniques may occur and are usually not a cause for concern.</li>
+              <li>For children, this practice may be helpful as a way to develop functional awareness — forming healthy habits early can be beneficial.</li>
+              <li>At the beginning of practice, unfamiliar sensations in the tongue, palate, or throat may appear. These usually decrease as the body adapts.</li>
+              <li>During the first weeks, changes in sensation in the jaw or sublingual muscles are common as they begin to engage more actively.</li>
+              <li>Increased salivation or, conversely, temporary dryness of the mouth may occur in the early stages — these are common adaptation responses.</li>
+              <li>During sleep, there is no need to control the position of the tongue. Comfortable nasal breathing and general relaxation are sufficient.</li>
+            </ul>
+
+            <div class="soft-note">
+              <p>It is important to remember that this practice is intended to support natural balance and harmony, not to create radical changes in appearance.</p>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>🧭 Important Notes &amp; Recommendations</h2>
+            <ol class="numbered">
+              <li>Always wash your hands before practice or use hand sanitizer. Keep the thumbnails trimmed short.</li>
+              <li>Avoid excessive pressure. All techniques are performed gently and mindfully — we guide movement rather than force it.</li>
+              <li>Use imagination and awareness. While performing the exercises, it can be helpful to mentally visualize muscle engagement and soft tissue movement, focusing on balance and relaxation.</li>
+              <li>Breathe through the nose throughout the practice.</li>
+              <li>Never create tension in the back of the head. If you cannot find a position where the occipital area feels relaxed, pause the exercise, perform relaxation techniques for this area, and only then decide whether to continue. Tension in the back of the head can negatively affect overall facial comfort, which is why softness, ease, and relaxation are core principles of this course.</li>
+            </ol>
+          </section>
+        </section>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
