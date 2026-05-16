@@ -41,7 +41,7 @@ export const courseLessons: CourseLesson[] = [
       {
         type: "html",
         title: "Course overview",
-        materialId: "welcome-overview",
+        materialId: "fvh-welcome",
       },
     ],
   },
@@ -58,7 +58,7 @@ export const courseLessons: CourseLesson[] = [
       {
         type: "html",
         title: "Preparation & Safety Principles",
-        materialId: "lesson-2-guidelines",
+        materialId: "lesson-1",
       },
     ],
   },
@@ -89,7 +89,7 @@ export const courseLessons: CourseLesson[] = [
       {
         type: "html",
         title: "Practice notes",
-        materialId: "foundation-notes",
+        materialId: "lesson-2",
       },
     ],
   },
