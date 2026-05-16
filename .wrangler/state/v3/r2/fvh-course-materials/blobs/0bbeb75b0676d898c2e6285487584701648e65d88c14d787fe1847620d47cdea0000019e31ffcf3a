@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Welcome | Facial Volume Harmony</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --fvh-bg: #f7f2ed;
+      --fvh-paper: rgba(255, 252, 248, 0.80);
+      --fvh-ink: #4a4039;
+      --fvh-muted: #7b6c61;
+      --fvh-accent: #d7b59c;
+      --fvh-accent-dark: #b88e73;
+      --fvh-line: rgba(74, 64, 57, 0.13);
+      --fvh-shadow: 0 28px 80px rgba(74, 64, 57, 0.12);
+      --fvh-radius-lg: 34px;
+      --fvh-radius-md: 24px;
+      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+      scroll-behavior: smooth;
+      background: var(--fvh-bg);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--fvh-ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.75;
+      background:
+        radial-gradient(circle at top left, rgba(215, 181, 156, 0.22), transparent 32rem),
+        radial-gradient(circle at 85% 18%, rgba(255, 255, 255, 0.72), transparent 24rem),
+        linear-gradient(180deg, #f7f2ed 0%, #fbf8f4 48%, #f3ebe3 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(74, 64, 57, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 64, 57, 0.018) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+    }
+
+    .lesson-shell {
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: clamp(24px, 5vw, 64px) clamp(18px, 4vw, 42px);
+    }
+
+    .lesson-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--fvh-line);
+      border-radius: var(--fvh-radius-lg);
+      background:
+        linear-gradient(145deg, rgba(255, 252, 248, 0.94), rgba(246, 239, 232, 0.76)),
+        var(--fvh-paper);
+      box-shadow: var(--fvh-shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .lesson-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 9px;
+      background: linear-gradient(90deg, #cfa98f, #ead4c2, #cfa98f);
+    }
+
+    .lesson-inner {
+      padding: clamp(30px, 6vw, 72px);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .lesson-header {
+      margin-bottom: clamp(30px, 5vw, 52px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--fvh-accent-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.65;
+    }
+
+    h1 {
+      max-width: 820px;
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(2.75rem, 7vw, 5.3rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 0.95;
+      color: var(--fvh-ink);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      color: var(--fvh-ink);
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+    }
+
+    .intro-rule {
+      width: 100%;
+      height: 1px;
+      margin: clamp(28px, 5vw, 48px) 0;
+      background: linear-gradient(90deg, transparent, rgba(74, 64, 57, 0.18), transparent);
+    }
+
+    .lesson-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 20px;
+      max-width: 760px;
+    }
+
+    .lesson-content p {
+      margin: 0;
+      color: var(--fvh-ink);
+      font-size: clamp(1rem, 1.5vw, 1.075rem);
+      letter-spacing: -0.012em;
+    }
+
+    .lesson-content p.lead {
+      color: #3f3731;
+      font-size: clamp(1.08rem, 1.9vw, 1.22rem);
+      line-height: 1.82;
+    }
+
+    .soft-callout,
+    .section {
+      margin: 8px 0;
+      padding: clamp(20px, 4vw, 30px);
+      border: 1px solid rgba(215, 181, 156, 0.45);
+      border-radius: var(--fvh-radius-md);
+      background: linear-gradient(135deg, rgba(255, 252, 248, 0.86), rgba(241, 229, 218, 0.52));
+      box-shadow: 0 14px 38px rgba(74, 64, 57, 0.055);
+    }
+
+    ul {
+      margin: 14px 0 0;
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    li {
+      position: relative;
+      padding-left: 30px;
+      color: var(--fvh-ink);
+      font-size: clamp(1rem, 1.5vw, 1.055rem);
+      letter-spacing: -0.012em;
+    }
+
+    li::before {
+      content: "•";
+      position: absolute;
+      left: 8px;
+      top: 0;
+      color: var(--fvh-accent-dark);
+      font-weight: 700;
+    }
+
+    .image-wrap {
+      margin: clamp(10px, 3vw, 22px) auto;
+      width: min(100%, 680px);
+      padding: clamp(14px, 3vw, 24px);
+      border: 1px solid rgba(74, 64, 57, 0.11);
+      border-radius: 28px;
+      background: rgba(255, 252, 248, 0.82);
+      box-shadow: 0 18px 44px rgba(74, 64, 57, 0.09);
+    }
+
+    .image-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+    }
+
+    @media (max-width: 560px) {
+      .lesson-shell { padding-inline: 12px; }
+      .lesson-card { border-radius: 26px; }
+      .lesson-inner { padding: 28px 20px; }
+      .image-wrap { padding: 10px; border-radius: 22px; }
+      .image-wrap img { border-radius: 16px; }
+    }
+
+    @media print {
+      @page { margin: 18mm; }
+      body { background: #ffffff; }
+      body::before { display: none; }
+      .lesson-shell { width: 100%; padding: 0; }
+      .lesson-card { box-shadow: none; border: 0; border-radius: 0; }
+      .lesson-card::before { display: none; }
+      .lesson-inner { padding: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="lesson-shell" aria-label="Facial Volume Harmony Welcome">
+    <article class="lesson-card">
+      <div class="lesson-inner">
+        <header class="lesson-header">
+          <p class="eyebrow">Facial Volume Harmony</p>
+          <h1>Welcome</h1>
+          <div class="intro-rule" aria-hidden="true"></div>
+        </header>
+
+        <section class="lesson-content">
+          <p class="lead">Facial Volume Harmony is an educational program designed for those who want to bring back a sense of facial cohesion, expressiveness, and natural harmony — without injections or aggressive interventions.</p>
+
+          <p>The course is based on a conscious and functional approach to working with the face, supporting natural balance, volume, and proportions.</p>
+
+          <section class="section">
+            <h2>Throughout the program, you will be introduced to a holistic approach that helps to:</h2>
+            <ul>
+              <li>enhance the visual sense of facial volume</li>
+              <li>highlight natural contours and proportions</li>
+              <li>create a more open, fresh, and rested appearance around the eyes</li>
+              <li>enhance the expressiveness of the lower face and jawline</li>
+              <li>develop a sense of facial harmony and overall “lifted” presence</li>
+            </ul>
+          </section>
+
+          <p>The course integrates work with tongue position, breathing, soft tissues, and facial muscles, gently supporting natural tone, balance, and visual clarity of the facial features — without invasive methods.</p>
+
+          <p>The practice is designed to help cultivate a more confident, harmonious, and well-cared-for appearance through regular and mindful practice.</p>
+
+          <div class="soft-callout">
+            <p>This course is for educational purposes only. Results may vary and depend on individual consistency and practice.</p>
+          </div>
+
+          <section class="section">
+            <h2>Introduction</h2>
+            <p>Hello and welcome to the Facial Volume Harmony course.</p>
+          </section>
+
+          <p>This course is dedicated to a conscious and functional approach to working with the face, supporting the visual sense of volume, contour definition, and expressiveness of the lower face.</p>
+
+          <p>The first part of the course focuses on tongue position, breathing, and swallowing as important elements that influence facial balance and a sense of overall facial cohesion.</p>
+
+          <p>Next, you will be introduced to gentle manual techniques for working with the soft tissues and facial muscles. These practices help enhance the visual sense of volume and highlight natural contours, including the jawline area.</p>
+
+          <p>In the final part of the course, I will share additional soft-tissue techniques aimed at developing a more defined, expressive, and harmonious lower face, as well as promoting a more open and refreshed appearance with regular practice.</p>
+
+          <div class="soft-callout">
+            <p>This course is for educational purposes only. Results may vary and depend on individual consistency and practice.</p>
+          </div>
+
+          
+        </section>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

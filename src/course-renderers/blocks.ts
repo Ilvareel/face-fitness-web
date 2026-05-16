@@ -49,9 +49,9 @@ export function renderLessonBlock(block: LessonBlock): string {
           <iframe
             class="html-material-iframe"
             title="${escapeHtml(block.title)}"
-            srcdoc="${escapeHtml(material)}"
+            src="/api/course-material?id=${encodeURIComponent(block.materialId)}"
             loading="lazy"
-            sandbox=""
+            sandbox="allow-same-origin"
             referrerpolicy="no-referrer"
           ></iframe>
         </div>
