@@ -143,7 +143,10 @@ function safeEqual(a: string, b: string): boolean {
 }
 
 async function sha256Hex(value: string): Promise<string> {
-  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(value),
+  );
   return toHex(digest);
 }
 
@@ -155,14 +158,17 @@ async function signPayload(payload: string, secret: string): Promise<string> {
     encoder.encode(secret),
     { name: "HMAC", hash: "SHA-256" },
     false,
-    ["sign"]
+    ["sign"],
   );
 
   const digest = await crypto.subtle.sign("HMAC", key, encoder.encode(payload));
   return toHex(digest);
 }
 
-async function createAccessCookie(emailNormalized: string, secret: string): Promise<string> {
+async function createAccessCookie(
+  emailNormalized: string,
+  secret: string,
+): Promise<string> {
   const expiresAt = Date.now() + COOKIE_MAX_AGE_SECONDS * 1000;
   const emailEncoded = encodeURIComponent(emailNormalized);
   const payload = `${emailEncoded}|${expiresAt}`;
@@ -171,7 +177,10 @@ async function createAccessCookie(emailNormalized: string, secret: string): Prom
   return `${payload}|${signature}`;
 }
 
-async function verifyAccessCookie(cookieValue: string, secret: string): Promise<string | null> {
+async function verifyAccessCookie(
+  cookieValue: string,
+  secret: string,
+): Promise<string | null> {
   const parts = cookieValue.split("|");
   if (parts.length !== 3) return null;
 
@@ -189,13 +198,16 @@ async function verifyAccessCookie(cookieValue: string, secret: string): Promise<
   return decodeURIComponent(emailEncoded);
 }
 
-async function isPaidCustomer(db: D1Database, emailNormalized: string): Promise<boolean> {
+async function isPaidCustomer(
+  db: D1Database,
+  emailNormalized: string,
+): Promise<boolean> {
   const customer = await db
     .prepare(
       `SELECT status
        FROM paid_customers
        WHERE email_normalized = ?
-       LIMIT 1`
+       LIMIT 1`,
     )
     .bind(emailNormalized)
     .first<{ status: string }>();
@@ -207,7 +219,7 @@ async function logAccessAttempt(
   db: D1Database,
   request: RequestLike,
   emailNormalized: string,
-  success: boolean
+  success: boolean,
 ): Promise<void> {
   const ip =
     request.headers.get("cf-connecting-ip") ||
@@ -222,7 +234,7 @@ async function logAccessAttempt(
   await db
     .prepare(
       `INSERT INTO access_logs (email_normalized, success, ip_hash, user_agent_hash)
-       VALUES (?, ?, ?, ?)`
+       VALUES (?, ?, ?, ?)`,
     )
     .bind(emailNormalized, success ? 1 : 0, ipHash, userAgentHash)
     .run();
@@ -234,14 +246,21 @@ function getLessonByPath(pathname: string): Lesson | null {
 }
 
 function getNextLesson(currentLesson: Lesson): Lesson | null {
-  return LESSONS.find((lesson) => lesson.number === currentLesson.number + 1) || null;
+  return (
+    LESSONS.find((lesson) => lesson.number === currentLesson.number + 1) || null
+  );
 }
 
 function getPreviousLesson(currentLesson: Lesson): Lesson | null {
-  return LESSONS.find((lesson) => lesson.number === currentLesson.number - 1) || null;
+  return (
+    LESSONS.find((lesson) => lesson.number === currentLesson.number - 1) || null
+  );
 }
 
-function renderGatePage(errorMessage = ""): string {
+function renderGatePage(errorMessage = "", redirectTo = "/course"): string {
+  const safeRedirectTo = redirectTo.startsWith("/course")
+    ? redirectTo
+    : "/course";
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -377,6 +396,7 @@ function renderGatePage(errorMessage = ""): string {
       ${errorMessage ? `<p class="error">${errorMessage}</p>` : ""}
 
       <form method="post" action="/course">
+        <input type="hidden" name="redirect_to" value="${escapeHtml(safeRedirectTo)}" />
         <label for="email">Purchase email</label>
         <input id="email" name="email" type="email" autocomplete="email" required />
         <button type="submit">Continue to course</button>
@@ -396,13 +416,12 @@ function renderCourseShell(params: {
   emailNormalized: string;
   activeLessonId?: string;
   mainContent: string;
-  rightPanel?: string;
 }): string {
   const sidebarItems = LESSONS.map((lesson) => {
     const isActive = lesson.id === params.activeLessonId;
     const assetLabel = [
       lesson.hasVideo ? "Video" : "",
-      lesson.hasPdf ? "PDF" : "",
+      lesson.hasPdf ? "Material" : "",
     ]
       .filter(Boolean)
       .join(" + ");
@@ -487,36 +506,6 @@ function renderCourseShell(params: {
         color: var(--muted);
       }
 
-      .progress-card {
-        border: 1px solid var(--line);
-        border-radius: 22px;
-        background: #fff;
-        padding: 18px;
-        margin-bottom: 24px;
-      }
-
-      .progress-card span {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        color: var(--muted);
-        font-size: 0.85rem;
-      }
-
-      .progress-bar {
-        height: 8px;
-        border-radius: 999px;
-        background: #eadfd6;
-        margin-top: 12px;
-        overflow: hidden;
-      }
-
-      .progress-bar i {
-        display: block;
-        width: 25%;
-        height: 100%;
-        background: var(--accent);
-      }
 
       .sidebar-heading {
         margin: 22px 0 10px;
@@ -646,11 +635,8 @@ function renderCourseShell(params: {
         padding: 34px 0 72px;
       }
 
-      .two-column {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 290px;
-        gap: 24px;
-        align-items: start;
+      .course-content {
+        display: block;
       }
 
       .hero-card,
@@ -900,10 +886,6 @@ function renderCourseShell(params: {
           display: block;
         }
 
-        .two-column {
-          grid-template-columns: 1fr;
-        }
-
         .access-pill {
           white-space: normal;
         }
@@ -952,14 +934,6 @@ function renderCourseShell(params: {
           <small>Structured Practice System</small>
         </a>
 
-        <div class="progress-card">
-          <span>
-            <strong>Course Progress</strong>
-            <em>25%</em>
-          </span>
-          <div class="progress-bar" aria-hidden="true"><i></i></div>
-        </div>
-
         <p class="sidebar-heading">Lessons</p>
         <nav class="lesson-list" aria-label="Course lessons">
           ${sidebarItems}
@@ -1007,14 +981,14 @@ function renderDashboard(emailNormalized: string): string {
   }).join("");
 
   const mainContent = `
-    <div class="two-column">
+    <div class="course-content">
       <section>
         <div class="hero-card">
           <p class="eyebrow">Protected course</p>
           <h1>Welcome to your course portal.</h1>
           <p class="intro">
             Continue step by step through the Facial Volume Harmony practice system.
-            Your lessons will include video guidance, protected PDF materials, or both,
+            Your lessons will include video guidance, protected lesson materials, or both,
             depending on the lesson.
           </p>
           <div class="nav-row">
@@ -1026,18 +1000,6 @@ function renderDashboard(emailNormalized: string): string {
           ${moduleCards}
         </section>
       </section>
-
-      <aside class="panel">
-        <h2>Your access</h2>
-        <p>
-          You are currently verified as:<br />
-          <strong>${escapeHtml(emailNormalized)}</strong>
-        </p>
-        <p>
-          Access stays active for 48 hours on this device. After that, you will simply
-          verify your purchase email again.
-        </p>
-      </aside>
     </div>
   `;
 
@@ -1066,16 +1028,16 @@ function renderLessonPage(lesson: Lesson, emailNormalized: string): string {
 
   const pdfBlock = lesson.hasPdf
     ? `<section class="media-card">
-        <h2>PDF material</h2>
-        <div class="pdf-placeholder" role="img" aria-label="Protected PDF viewer placeholder">
+        <h2>Lesson material</h2>
+        <div class="pdf-placeholder" role="img" aria-label="Protected lesson material placeholder">
           <div class="pdf-page">
             <strong>${escapeHtml(lesson.title)}</strong>
             <p>
-              Protected PDF viewer placeholder. In Phase 5B this will load the PDF through
-              a protected endpoint, without a public file URL and without a visible download button.
+              Protected HTML material placeholder. In Phase 5B this will load the lesson material through
+              a protected endpoint, without a public file URL.
             </p>
             <p>
-              Later we can add email watermarking for stronger sharing deterrence.
+              Later we can add fullscreen viewing and email watermarking for stronger sharing deterrence.
             </p>
           </div>
         </div>
@@ -1083,7 +1045,7 @@ function renderLessonPage(lesson: Lesson, emailNormalized: string): string {
     : "";
 
   const mainContent = `
-    <div class="two-column">
+    <div class="course-content">
       <section class="lesson-stack">
         <div class="lesson-header">
           <p class="eyebrow">${escapeHtml(lesson.module)}</p>
@@ -1093,39 +1055,19 @@ function renderLessonPage(lesson: Lesson, emailNormalized: string): string {
           <div class="lesson-meta">
             <span class="tag">${escapeHtml(lesson.duration)}</span>
             ${lesson.hasVideo ? `<span class="tag">Video lesson</span>` : ""}
-            ${lesson.hasPdf ? `<span class="tag">Protected PDF</span>` : ""}
+            ${lesson.hasPdf ? `<span class="tag">Protected material</span>` : ""}
           </div>
         </div>
 
         ${videoBlock}
         ${pdfBlock}
 
-        <section class="media-card">
-          <h2>Lesson notes</h2>
-          <p class="placeholder-note">
-            Placeholder for additional lesson notes, practice reminders, warnings,
-            or written instructions. We can remove this later if you decide it is not needed.
-          </p>
-        </section>
 
         <div class="nav-row">
           ${previousLesson ? `<a class="button" href="/course/${previousLesson.id}">← Previous</a>` : `<a class="button" href="/course">← Dashboard</a>`}
           ${nextLesson ? `<a class="button primary" href="/course/${nextLesson.id}">Next lesson →</a>` : `<a class="button primary" href="/course">Back to dashboard</a>`}
         </div>
       </section>
-
-      <aside class="panel">
-        <h2>Lesson access</h2>
-        <p>
-          Signed in as:<br />
-          <strong>${escapeHtml(emailNormalized)}</strong>
-        </p>
-        <ul>
-          <li>Course pages are noindex.</li>
-          <li>Materials are visible only after verification.</li>
-          <li>Your access cookie is valid for 48 hours.</li>
-        </ul>
-      </aside>
     </div>
   `;
 
@@ -1146,24 +1088,29 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
   const cookieValue = getCookie(context.request, COOKIE_NAME);
 
+  const url = new URL(context.request.url);
+  const pathname = url.pathname.replace(/\/$/, "") || "/course";
+
   if (!cookieValue) {
-    return html(renderGatePage());
+    return html(renderGatePage("", pathname));
   }
 
   const emailNormalized = await verifyAccessCookie(cookieValue, secret);
 
   if (!emailNormalized) {
-    return html(renderGatePage());
+    return html(renderGatePage("", pathname));
   }
 
   const isPaid = await isPaidCustomer(context.env.DB, emailNormalized);
 
   if (!isPaid) {
-    return html(renderGatePage("We could not verify active access for this email."));
+    return html(
+      renderGatePage(
+        "We could not verify active access for this email.",
+        pathname,
+      ),
+    );
   }
-
-  const url = new URL(context.request.url);
-  const pathname = url.pathname.replace(/\/$/, "");
 
   if (pathname === "/course") {
     return html(renderDashboard(emailNormalized));
@@ -1188,21 +1135,34 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const formData = await context.request.formData();
   const emailOriginal = (formData.get("email") || "").toString();
   const emailNormalized = normalizeEmail(emailOriginal);
+  const redirectToRaw = (formData.get("redirect_to") || "/course").toString();
+  const redirectTo = redirectToRaw.startsWith("/course")
+    ? redirectToRaw
+    : "/course";
 
   if (!isValidEmail(emailNormalized)) {
-    return html(renderGatePage("Please enter a valid email address."), 400);
+    return html(
+      renderGatePage("Please enter a valid email address.", redirectTo),
+      400,
+    );
   }
 
   const isPaid = await isPaidCustomer(context.env.DB, emailNormalized);
 
-  await logAccessAttempt(context.env.DB, context.request, emailNormalized, isPaid);
+  await logAccessAttempt(
+    context.env.DB,
+    context.request,
+    emailNormalized,
+    isPaid,
+  );
 
   if (!isPaid) {
     return html(
       renderGatePage(
-        "We could not verify this email. If you purchased just now, please wait 1–2 minutes and try again."
+        "We could not verify this email. If you purchased just now, please wait 1–2 minutes and try again.",
+        redirectTo,
       ),
-      403
+      403,
     );
   }
 
@@ -1212,5 +1172,5 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     "set-cookie": `${COOKIE_NAME}=${encodeURIComponent(cookieValue)}; Max-Age=${COOKIE_MAX_AGE_SECONDS}; Path=/course; HttpOnly; Secure; SameSite=Lax`,
   };
 
-  return redirect("/course", headers);
+  return redirect(redirectTo, headers);
 };
