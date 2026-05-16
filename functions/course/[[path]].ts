@@ -420,7 +420,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const cookieValue = await createAccessCookie(emailNormalized, secret);
 
   const headers = {
-    "set-cookie": `${COOKIE_NAME}=${encodeURIComponent(cookieValue)}; Max-Age=${COOKIE_MAX_AGE_SECONDS}; Path=/course; HttpOnly; Secure; SameSite=Lax`,
+    "set-cookie": `${COOKIE_NAME}=${encodeURIComponent(cookieValue)}; Max-Age=${COOKIE_MAX_AGE_SECONDS}; Path=/; HttpOnly; Secure; SameSite=Lax`,
   };
 
   return redirect(redirectTo, headers);
