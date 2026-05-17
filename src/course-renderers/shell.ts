@@ -520,6 +520,13 @@ export function renderCourseShell(params: {
             top: 14px;
             right: 14px;
         }
+
+        .video-frame {
+            width: min(100%, 320px);
+            aspect-ratio: 9 / 16;
+            margin: 0 auto;
+            border-radius: 22px;
+        }
       }
     </style>
   </head>
