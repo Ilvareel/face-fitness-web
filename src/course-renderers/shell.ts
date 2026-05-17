@@ -390,6 +390,7 @@ export function renderCourseShell(params: {
       }
 
         .html-material-frame {
+        position: relative;
         border: 1px solid var(--line);
         border-radius: 22px;
         background: #fff;
@@ -404,6 +405,31 @@ export function renderCourseShell(params: {
         border-radius: 0;
         border: 0;
         background: #fff;
+        }
+
+        .fullscreen-close {
+        display: none;
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        z-index: 20;
+        width: 44px;
+        height: 44px;
+        border: 1px solid rgba(17, 17, 17, 0.12);
+        border-radius: 999px;
+        background: rgba(255, 253, 250, 0.92);
+        color: var(--ink);
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        box-shadow: 0 12px 32px rgba(17, 17, 17, 0.12);
+        backdrop-filter: blur(12px);
+        }
+
+        .html-material-frame:fullscreen .fullscreen-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         }
 
         .html-material-iframe {
@@ -432,37 +458,51 @@ export function renderCourseShell(params: {
         .topbar-inner,
         .content-wrap,
         .mobile-nav {
-          width: min(100% - 28px, 1180px);
+            width: min(100% - 20px, 1180px);
         }
 
         .topbar-inner {
-          align-items: flex-start;
-          flex-direction: column;
-          padding: 16px 0;
+            align-items: flex-start;
+            flex-direction: column;
+            padding: 16px 0;
         }
 
         .module-grid {
-          grid-template-columns: 1fr;
+            grid-template-columns: 1fr;
         }
 
         .hero-card,
         .media-card {
-          border-radius: 24px;
+            border-radius: 24px;
+        }
+
+        .media-card {
+            padding: 12px;
         }
 
         .material-heading {
-          align-items: flex-start;
-          flex-direction: column;
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .fullscreen-button {
+            width: 100%;
         }
 
         .html-material-frame {
-          min-height: 420px;
-          padding: 14px;
+            height: 72vh;
+            min-height: 460px;
+            border-radius: 18px;
         }
 
-        .html-material-placeholder {
-          min-height: 340px;
-          padding: 24px;
+        .html-material-frame:fullscreen {
+            height: 100vh;
+            border-radius: 0;
+        }
+
+        .fullscreen-close {
+            top: 14px;
+            right: 14px;
         }
       }
     </style>
