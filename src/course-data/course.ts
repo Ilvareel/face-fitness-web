@@ -34,7 +34,7 @@ export const courseLessons: CourseLesson[] = [
       {
         type: "video",
         title: "Welcome introduction",
-        videoId: "welcome-intro",
+        videoId: "29eed2baa8606bef777ad88be72319c7",
         duration: "6 min",
       },
 

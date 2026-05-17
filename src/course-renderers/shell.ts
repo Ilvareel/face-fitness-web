@@ -338,6 +338,22 @@ export function renderCourseShell(params: {
           radial-gradient(circle at 70% 30%, rgba(255,255,255,0.82), transparent 18rem);
       }
 
+      .video-frame {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        border-radius: 22px;
+        overflow: hidden;
+        background: #000;
+      }
+
+        .stream-video-iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #000;
+      }
+
       .play-button {
         width: 74px;
         height: 74px;

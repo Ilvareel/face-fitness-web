@@ -4,19 +4,29 @@ import { escapeHtml } from "./utils";
 
 export function renderLessonBlock(block: LessonBlock): string {
   if (block.type === "video") {
-    return `
-      <section class="media-card">
-        <h2>${escapeHtml(block.title)}</h2>
-        <div class="video-placeholder" role="img" aria-label="Protected video placeholder">
-          <div class="play-button">▶</div>
-        </div>
-        <p class="placeholder-note">
-          Video placeholder. Later this will use Cloudflare Stream protected playback.
-          ${block.duration ? `Duration: ${escapeHtml(block.duration)}.` : ""}
-        </p>
-      </section>
-    `;
-  }
+  return `
+    <section class="media-card">
+      <h2>${escapeHtml(block.title)}</h2>
+
+      <div class="video-frame">
+        <iframe
+          class="stream-video-iframe"
+          title="${escapeHtml(block.title)}"
+          src="/api/course-video?videoId=${encodeURIComponent(block.videoId)}"
+          loading="lazy"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      ${
+        block.duration
+          ? `<p class="placeholder-note">Duration: ${escapeHtml(block.duration)}.</p>`
+          : ""
+      }
+    </section>
+  `;
+}
 
   if (block.type === "html") {
     return `
@@ -33,14 +43,23 @@ export function renderLessonBlock(block: LessonBlock): string {
         </div>
 
         <div class="html-material-frame" role="region" aria-label="Protected lesson material">
-          <iframe
-            class="html-material-iframe"
-            title="${escapeHtml(block.title)}"
-            src="/api/course-material?id=${encodeURIComponent(block.materialId)}"
-            loading="lazy"
-            sandbox="allow-same-origin"
-            referrerpolicy="no-referrer"
-          ></iframe>
+            <button
+                class="fullscreen-close"
+                type="button"
+                aria-label="Close full screen"
+                onclick="document.fullscreenElement && document.exitFullscreen?.()"
+            >
+                ×
+            </button>
+
+            <iframe
+                class="html-material-iframe"
+                title="${escapeHtml(block.title)}"
+                src="/api/course-material?id=${encodeURIComponent(block.materialId)}"
+                loading="lazy"
+                sandbox="allow-same-origin"
+                referrerpolicy="no-referrer"
+            ></iframe>
         </div>
       </section>
     `;
