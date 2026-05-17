@@ -426,10 +426,10 @@ export function renderCourseShell(params: {
         backdrop-filter: blur(12px);
         }
 
-        .html-material-frame:fullscreen .fullscreen-close {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        :fullscreen .fullscreen-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .html-material-iframe {
